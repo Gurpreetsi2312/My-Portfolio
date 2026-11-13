@@ -5,949 +5,1046 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gurpreet Singh — Full-Stack CMS & E-Commerce Developer (WordPress & Shopify)</title>
   <meta name="description" content="Full-Stack CMS & E-Commerce Developer with 3+ years of experience building custom WordPress themes, bespoke Shopify (Liquid) storefronts, and sub-2s Core Web Vitals performance." />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232563EB'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' fill='%23FFFFFF' font-family='sans-serif' font-size='26' font-weight='bold'%3EGS%3C/text%3E%3C/svg%3E" />
+
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- React 18 & Babel Standalone (Runs natively on GitHub Pages & Vercel) -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
             sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
-            serif: ['"Instrument Serif"', 'Georgia', 'serif'],
             mono: ['"JetBrains Mono"', 'monospace'],
           },
           colors: {
-            cream: '#F7F4ED',
-            sand: '#EFECE3',
-            ink: '#141519',
-            emeraldDeep: '#059669',
-            terracotta: '#D95D39',
+            navy: '#0F172A',
+            brand: '#2563EB',
+            brandDark: '#1D4ED8',
+            mint: '#059669',
+          },
+          boxShadow: {
+            soft: '0 10px 30px -10px rgba(15, 23, 42, 0.06), 0 4px 12px -4px rgba(15, 23, 42, 0.03)',
+            cardHover: '0 20px 40px -15px rgba(37, 99, 235, 0.12), 0 8px 20px -8px rgba(15, 23, 42, 0.06)',
           }
         }
       }
     }
   </script>
+
   <style>
     body {
-      background-color: #F7F4ED;
-      color: #141519;
+      background-color: #F8FAFC;
+      color: #0F172A;
+    }
+    .hero-mesh {
+      background-color: #FFFFFF;
       background-image:
-        radial-gradient(circle at 12% 8%, rgba(5, 150, 105, 0.08), transparent 38%),
-        radial-gradient(circle at 88% 14%, rgba(217, 93, 57, 0.09), transparent 40%);
+        radial-gradient(at 15% 10%, rgba(37, 99, 235, 0.07) 0px, transparent 50%),
+        radial-gradient(at 85% 15%, rgba(5, 150, 105, 0.07) 0px, transparent 48%),
+        radial-gradient(at 50% 90%, rgba(241, 245, 249, 0.9) 0px, transparent 60%);
     }
-
-    .editorial-grid {
-      background-size: 44px 44px;
+    .subtle-grid {
+      background-size: 40px 40px;
       background-image:
-        linear-gradient(to right, rgba(20, 21, 25, 0.045) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(20, 21, 25, 0.045) 1px, transparent 1px);
+        linear-gradient(to right, rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
     }
-
-    /* Tactile Editorial Card */
-    .tactile-card {
-      background: #FFFFFF;
-      border: 1.5px solid #141519;
-      box-shadow: 5px 5px 0px #141519;
-      transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    .tactile-card:hover {
-      transform: translate(-3px, -4px);
-      box-shadow: 9px 9px 0px #141519;
+    .animate-fade-up {
+      animation: fadeUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
-
-    /* Kinetic Marquee */
-    @keyframes marqueeLeft {
-      0% { transform: translateX(0%); }
+    @keyframes marqueeScroll {
+      0% { transform: translateX(0); }
       100% { transform: translateX(-50%); }
     }
     .animate-marquee {
       display: flex;
       width: max-content;
-      animation: marqueeLeft 32s linear infinite;
+      animation: marqueeScroll 34s linear infinite;
     }
-    .marquee-wrapper:hover .animate-marquee {
+    .marquee-box:hover .animate-marquee {
       animation-play-state: paused;
-    }
-
-    /* Hero Entrance Animations */
-    @keyframes fadeSlideUp {
-      0% { opacity: 0; transform: translateY(24px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-    .hero-enter {
-      opacity: 0;
-      animation: fadeSlideUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    }
-    .delay-1 { animation-delay: 0.08s; }
-    .delay-2 { animation-delay: 0.18s; }
-    .delay-3 { animation-delay: 0.28s; }
-    .delay-4 { animation-delay: 0.38s; }
-
-    /* Scroll Reveal Choreography */
-    .reveal {
-      opacity: 0;
-      transform: translateY(26px);
-      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .reveal.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Floating Ambient Badge */
-    @keyframes gentleFloat {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-5px); }
-    }
-    .float-slow {
-      animation: gentleFloat 4.5s ease-in-out infinite;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .animate-marquee, .hero-enter, .float-slow { animation: none !important; opacity: 1 !important; transform: none !important; }
-      .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
     }
   </style>
 </head>
-<body class="font-sans antialiased selection:bg-emeraldDeep selection:text-white overflow-x-hidden">
+<body class="font-sans antialiased selection:bg-brand selection:text-white">
+  <div id="root"></div>
 
-  <!-- Top Reading Progress Indicator -->
-  <div id="scrollProgress" class="fixed top-0 left-0 h-[3px] bg-gradient-to-r from-emeraldDeep via-teal-500 to-terracotta z-50 w-0 transition-[width] duration-75"></div>
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
 
-  <!-- Sticky Daylight Header -->
-  <header class="sticky top-0 z-40 bg-cream/85 backdrop-blur-xl border-b border-ink/15">
-    <div class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
-      <a href="#" class="flex items-center gap-2.5 group">
-        <span class="w-8 h-8 rounded-full bg-ink text-cream flex items-center justify-center font-mono text-xs font-semibold group-hover:bg-emeraldDeep transition-colors duration-300">
-          GS
-        </span>
-        <span class="font-mono text-sm font-semibold tracking-tight text-ink">gurpreet.dev</span>
-      </a>
-
-      <!-- Desktop Navigation -->
-      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-ink/75">
-        <a href="#work" class="hover:text-ink transition relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-emeraldDeep hover:after:w-full after:transition-all">Case Studies</a>
-        <a href="#stores" class="hover:text-ink transition relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-emeraldDeep hover:after:w-full after:transition-all">Live AU Stores</a>
-        <a href="#experience" class="hover:text-ink transition relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-emeraldDeep hover:after:w-full after:transition-all">Experience</a>
-        <a href="#stack" class="hover:text-ink transition relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-emeraldDeep hover:after:w-full after:transition-all">Stack</a>
-        <a href="#contact" class="hover:text-ink transition relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-emeraldDeep hover:after:w-full after:transition-all">Contact</a>
-      </nav>
-
-      <!-- Header Buttons -->
-      <div class="flex items-center gap-2.5">
-        <a href="./Gurpreet-Singh-Resume.pdf" download class="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono font-medium px-3.5 py-2 rounded-full border border-ink/25 bg-white text-ink hover:border-ink hover:bg-sand transition">
-          <span>Resume.pdf</span>
-          <span class="text-emeraldDeep font-bold">↓</span>
-        </a>
-        <a href="#contact" class="text-xs font-semibold px-4 py-2.5 rounded-full bg-ink text-cream hover:bg-emeraldDeep transition-colors duration-300">
-          Hire / Inquire
-        </a>
-        <button id="mobileMenuBtn" aria-label="Toggle Menu" class="md:hidden p-2 rounded-lg border border-ink/20 bg-white text-ink">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- Mobile Dropdown -->
-    <div id="mobileMenu" class="hidden md:hidden border-t border-ink/15 bg-cream px-5 py-4 space-y-3 text-sm font-medium">
-      <a href="#work" class="block text-ink/80 hover:text-emeraldDeep">Case Studies</a>
-      <a href="#stores" class="block text-ink/80 hover:text-emeraldDeep">Live AU Stores</a>
-      <a href="#experience" class="block text-ink/80 hover:text-emeraldDeep">Experience</a>
-      <a href="#stack" class="block text-ink/80 hover:text-emeraldDeep">Tech Stack</a>
-      <a href="./Gurpreet-Singh-Resume.pdf" download class="block font-mono text-xs text-emeraldDeep pt-2 border-t border-ink/10">Download Resume (PDF) ↓</a>
-    </div>
-  </header>
-
-  <main>
-
-    <!-- Daylight Editorial Hero Section -->
-    <section class="editorial-grid border-b border-ink/15">
-      <div class="max-w-6xl mx-auto px-5 py-16 sm:py-24">
-        <div class="grid lg:grid-cols-12 gap-12 items-center">
-
-          <!-- Left Editorial Column -->
-          <div class="lg:col-span-7">
-            <div class="hero-enter inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white border border-ink/20 text-xs font-mono text-ink shadow-sm mb-6">
-              <span class="relative flex h-2.5 w-2.5">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emeraldDeep opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emeraldDeep"></span>
-              </span>
-              Available for International Roles (AU • UK • NZ • EU • Remote) & D2C Builds
-            </div>
-
-            <h1 class="hero-enter delay-1 text-4xl sm:text-5xl lg:text-[3.55rem] font-extrabold tracking-tight text-ink leading-[1.08]">
-              Engineering <span class="font-serif italic font-normal text-emeraldDeep text-[1.12em]">sub-2s storefronts</span> &amp; scalable CMS systems.
-            </h1>
-
-            <p class="hero-enter delay-2 mt-6 text-base sm:text-lg text-ink/75 leading-relaxed max-w-2xl">
-              I'm <strong class="text-ink font-bold">Gurpreet Singh</strong>—a Full-Stack CMS &amp; E-Commerce Developer with <strong class="text-ink font-semibold">3+ years of experience</strong> building bespoke Shopify (Liquid) storefronts, custom WordPress themes/plugins, and REST API pipelines for international brands.
-            </p>
-
-            <!-- Primary Pill CTAs -->
-            <div class="hero-enter delay-3 mt-8 flex flex-wrap items-center gap-3.5">
-              <a href="#work" class="group px-6 py-3.5 rounded-full bg-ink text-cream font-semibold text-sm hover:bg-emeraldDeep transition-all duration-300 flex items-center gap-2">
-                <span>Explore Case Studies</span>
-                <span class="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
-              </a>
-              <a href="./Gurpreet-Singh-Resume.pdf" download class="px-5 py-3.5 rounded-full bg-white border-[1.5px] border-ink text-ink font-semibold text-sm hover:bg-sand transition">
-                Download CV (PDF)
-              </a>
-              <button id="copyEmailHero" type="button" class="px-4 py-3.5 rounded-full bg-sand/90 border border-ink/20 text-xs font-mono text-ink/85 hover:border-ink transition flex items-center gap-2">
-                <span id="copyEmailHeroText">gurpreet231201@gmail.com</span>
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-              </button>
-            </div>
-
-            <!-- Social Links -->
-            <div class="hero-enter delay-4 mt-8 flex flex-wrap items-center gap-6 text-xs font-mono text-ink/70">
-              <a href="https://github.com/Gurpreetsi2312" target="_blank" rel="noopener noreferrer" class="hover:text-emeraldDeep transition flex items-center gap-2">
-                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-                github.com/Gurpreetsi2312
-              </a>
-              <a href="https://www.linkedin.com/in/gurpreet-singh-0252201b6" target="_blank" rel="noopener noreferrer" class="hover:text-emeraldDeep transition flex items-center gap-2">
-                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                LinkedIn Profile
-              </a>
-            </div>
-          </div>
-
-          <!-- Right Bento Telemetry Column -->
-          <div class="lg:col-span-5 hero-enter delay-2 grid grid-cols-2 gap-4">
-            <!-- PageSpeed Gauge Card -->
-            <div class="col-span-2 tactile-card rounded-2xl p-6 flex items-center justify-between gap-4">
-              <div>
-                <span class="text-[11px] font-mono uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-100 text-emeraldDeep font-semibold">Core Web Vitals</span>
-                <p class="text-xl font-extrabold text-ink mt-2">90+ PageSpeed Standard</p>
-                <p class="text-xs text-ink/70 mt-1 leading-relaxed">
-                  Critical CSS, asset minification, image compression pipelines &amp; query pruning across 25+ builds.
-                </p>
-              </div>
-              <div class="relative w-20 h-20 shrink-0 flex items-center justify-center float-slow">
-                <svg class="w-20 h-20 -rotate-90" viewBox="0 0 80 80">
-                  <circle cx="40" cy="40" r="32" stroke="#E5E1D8" stroke-width="6.5" fill="none" />
-                  <circle cx="40" cy="40" r="32" stroke="#059669" stroke-width="6.5" stroke-dasharray="201" stroke-dashoffset="10" stroke-linecap="round" fill="none" />
-                </svg>
-                <span class="absolute font-mono text-lg font-bold text-ink">96</span>
-              </div>
-            </div>
-
-            <!-- Animated Metric 1 -->
-            <div class="tactile-card rounded-2xl p-5 bg-white">
-              <p class="text-3xl font-extrabold text-ink"><span class="count-up" data-target="25">25</span>+</p>
-              <p class="text-xs font-bold text-ink mt-1">Production Stores</p>
-              <p class="text-[11px] text-ink/60 mt-0.5">WordPress &amp; Shopify</p>
-            </div>
-
-            <!-- Animated Metric 2 -->
-            <div class="tactile-card rounded-2xl p-5 bg-[#ECFDF5]">
-              <p class="text-3xl font-extrabold text-emeraldDeep">+<span class="count-up" data-target="22">22</span>%</p>
-              <p class="text-xs font-bold text-ink mt-1">Mobile Conversion</p>
-              <p class="text-[11px] text-ink/60 mt-0.5">Sub-1.8s Liquid UX</p>
-            </div>
-
-            <!-- Speed Comparison Bar -->
-            <div class="col-span-2 tactile-card rounded-2xl p-5">
-              <div class="flex items-center justify-between text-xs font-mono mb-3">
-                <span class="text-ink/70 font-medium">Avg. Load Time Reduction</span>
-                <span class="text-terracotta font-bold">-35%+ Faster</span>
-              </div>
-              <div class="space-y-3 text-[11px] font-mono">
-                <div>
-                  <div class="flex justify-between text-ink/60 mb-1">
-                    <span>Legacy Theme / App Bloat</span>
-                    <span>3.4s LCP</span>
-                  </div>
-                  <div class="w-full h-2.5 rounded-full bg-sand overflow-hidden border border-ink/10">
-                    <div class="w-[82%] h-full rounded-full bg-ink/30"></div>
-                  </div>
-                </div>
-                <div>
-                  <div class="flex justify-between text-ink font-semibold mb-1">
-                    <span>Custom Engineered Build</span>
-                    <span class="text-emeraldDeep">1.7s LCP</span>
-                  </div>
-                  <div class="w-full h-2.5 rounded-full bg-sand overflow-hidden border border-ink/10">
-                    <div class="w-[41%] h-full rounded-full bg-emeraldDeep"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- High-Contrast Kinetic Marquee Banner -->
-    <div class="marquee-wrapper bg-ink text-cream py-4 border-b border-ink overflow-hidden select-none">
-      <div class="animate-marquee flex items-center gap-8 font-mono text-xs sm:text-sm tracking-wider uppercase">
-        <span class="flex items-center gap-8">
-          <span>Shopify Liquid Architecture</span>
-          <span class="text-emerald-400">✦</span>
-          <span>WordPress Custom Themes &amp; Plugins</span>
-          <span class="text-terracotta">✦</span>
-          <span>Core Web Vitals 90+</span>
-          <span class="text-emerald-400">✦</span>
-          <span>Gutenberg / FSE &amp; ACF Pro</span>
-          <span class="text-terracotta">✦</span>
-          <span>WooCommerce AI &amp; llms.txt</span>
-          <span class="text-emerald-400">✦</span>
-          <span>REST API &amp; Webhook Integrations</span>
-          <span class="text-terracotta">✦</span>
-        </span>
-        <!-- Seamless Duplicate Track -->
-        <span class="flex items-center gap-8" aria-hidden="true">
-          <span>Shopify Liquid Architecture</span>
-          <span class="text-emerald-400">✦</span>
-          <span>WordPress Custom Themes &amp; Plugins</span>
-          <span class="text-terracotta">✦</span>
-          <span>Core Web Vitals 90+</span>
-          <span class="text-emerald-400">✦</span>
-          <span>Gutenberg / FSE &amp; ACF Pro</span>
-          <span class="text-terracotta">✦</span>
-          <span>WooCommerce AI &amp; llms.txt</span>
-          <span class="text-emerald-400">✦</span>
-          <span>REST API &amp; Webhook Integrations</span>
-          <span class="text-terracotta">✦</span>
-        </span>
-      </div>
-    </div>
-
-    <!-- Engineering Case Studies -->
-    <section id="work" class="max-w-6xl mx-auto px-5 py-20 border-b border-ink/15">
-      <div class="reveal flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-        <div>
-          <p class="text-xs font-mono uppercase tracking-wider text-terracotta font-semibold">Engineering Case Studies</p>
-          <h2 class="text-3xl sm:text-4xl font-extrabold text-ink mt-1.5">
-            Architecture &amp; <span class="font-serif italic font-normal text-emeraldDeep">measurable</span> impact
-          </h2>
-        </div>
-
-        <!-- Interactive Category Filter -->
-        <div class="flex flex-wrap gap-2" role="tablist" aria-label="Filter projects">
-          <button data-filter="all" class="filter-btn px-4 py-2 rounded-full text-xs font-mono bg-ink text-cream font-semibold transition">
-            All Builds
-          </button>
-          <button data-filter="shopify" class="filter-btn px-4 py-2 rounded-full text-xs font-mono bg-white border border-ink/20 text-ink hover:border-ink transition">
-            Shopify / Liquid
-          </button>
-          <button data-filter="wordpress" class="filter-btn px-4 py-2 rounded-full text-xs font-mono bg-white border border-ink/20 text-ink hover:border-ink transition">
-            WordPress / Plugins
-          </button>
-        </div>
-      </div>
-
-      <div class="grid md:grid-cols-3 gap-7">
-
-        <!-- Case Study 1: Shopify -->
-        <article data-category="shopify" class="reveal project-card tactile-card rounded-2xl overflow-hidden flex flex-col justify-between">
-          <div>
-            <!-- Light Editorial Browser Preview -->
-            <div class="bg-sand border-b border-ink/15 p-4">
-              <div class="flex items-center justify-between mb-3">
-                <div class="flex items-center gap-1.5">
-                  <span class="w-2.5 h-2.5 rounded-full bg-terracotta"></span>
-                  <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
-                  <span class="w-2.5 h-2.5 rounded-full bg-emeraldDeep"></span>
-                </div>
-                <span class="text-[10px] font-mono font-semibold text-emeraldDeep bg-emerald-100 px-2.5 py-0.5 rounded-full">1.7s LCP • +22% CVR</span>
-              </div>
-              <div class="rounded-xl bg-white border border-ink/15 p-3 space-y-2 shadow-sm">
-                <div class="flex items-center justify-between">
-                  <div class="h-2.5 w-20 rounded bg-ink/15"></div>
-                  <div class="px-2 py-0.5 rounded bg-emerald-100 text-[9px] font-mono font-semibold text-emeraldDeep">AJAX Drawer</div>
-                </div>
-                <div class="grid grid-cols-3 gap-2 pt-1">
-                  <div class="h-12 rounded-lg bg-cream border border-ink/10"></div>
-                  <div class="h-12 rounded-lg bg-cream border border-ink/10"></div>
-                  <div class="h-12 rounded-lg bg-emerald-50 border border-emeraldDeep/30"></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="p-6">
-              <div class="flex items-center justify-between gap-2 mb-3">
-                <span class="text-[11px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emeraldDeep">Shopify / Liquid</span>
-                <span class="text-xs font-mono text-ink/60">D2C Storefront</span>
-              </div>
-              <h3 class="text-lg font-bold text-ink">Custom E-Commerce Storefront</h3>
-              <p class="text-sm text-ink/75 mt-2.5 leading-relaxed">
-                Engineered custom collection filtering, slide-out AJAX cart drawers, and multi-currency checkout flows—lifting mobile conversions by 22% with sub-1.8s load times.
-              </p>
-            </div>
-          </div>
-
-          <div class="px-6 pb-6 pt-2">
-            <div class="flex flex-wrap gap-1.5 mb-5">
-              <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-sand text-ink/80">Liquid</span>
-              <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-sand text-ink/80">ES6+ JS</span>
-              <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-sand text-ink/80">Multi-Currency</span>
-            </div>
-            <button type="button" onclick="openModal('shopify')" class="w-full py-2.5 rounded-xl bg-cream hover:bg-ink hover:text-cream border border-ink/25 text-xs font-mono font-semibold text-ink transition">
-              Inspect Architecture →
-            </button>
-          </div>
-        </article>
-
-        <!-- Case Study 2: WordPress ACF / Gutenberg -->
-        <article data-category="wordpress" class="reveal project-card tactile-card rounded-2xl overflow-hidden flex flex-col justify-between" style="transition-delay: 80ms;">
-          <div>
-            <!-- Light Editorial Browser Preview -->
-            <div class="bg-sand border-b border-ink/15 p-4">
-              <div class="flex items-center justify-between mb-3">
-                <div class="flex items-center gap-1.5">
-                  <span class="w-2.5 h-2.5 rounded-full bg-terracotta"></span>
-                  <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
-                  <span class="w-2.5 h-2.5 rounded-full bg-emeraldDeep"></span>
-                </div>
-                <span class="text-[10px] font-mono font-semibold text-terracotta bg-orange-100 px-2.5 py-0.5 rounded-full">-50% Build Time</span>
-              </div>
-              <div class="rounded-xl bg-white border border-ink/15 p-3 space-y-2 shadow-sm">
-                <div class="flex items-center gap-2">
-                  <span class="px-2 py-0.5 rounded bg-orange-100 text-[9px] font-mono font-semibold text-terracotta">ACF Block</span>
-                  <span class="px-2 py-0.5 rounded bg-sand text-[9px] font-mono text-ink/70">REST JSON</span>
-                </div>
-                <div class="grid grid-cols-2 gap-2 pt-1">
-                  <div class="h-12 rounded-lg bg-cream border border-dashed border-ink/25"></div>
-                  <div class="h-12 rounded-lg bg-orange-50 border border-dashed border-terracotta/40"></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="p-6">
-              <div class="flex items-center justify-between gap-2 mb-3">
-                <span class="text-[11px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-orange-100 text-terracotta">WordPress / ACF Pro</span>
-                <span class="text-xs font-mono text-ink/60">Modular CMS</span>
-              </div>
-              <h3 class="text-lg font-bold text-ink">Modular Corporate &amp; Headless Theme</h3>
-              <p class="text-sm text-ink/75 mt-2.5 leading-relaxed">
-                Developed a reusable Gutenberg/FSE block theme featuring custom ACF Pro schemas and REST API endpoints, reducing page assembly time for content teams by 50%.
-              </p>
-            </div>
-          </div>
-
-          <div class="px-6 pb-6 pt-2">
-            <div class="flex flex-wrap gap-1.5 mb-5">
-              <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-sand text-ink/80">Gutenberg / FSE</span>
-              <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-sand text-ink/80">ACF Pro</span>
-              <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-sand text-ink/80">REST API</span>
-            </div>
-            <button type="button" onclick="openModal('wordpress')" class="w-full py-2.5 rounded-xl bg-cream hover:bg-ink hover:text-cream border border-ink/25 text-xs font-mono font-semibold text-ink transition">
-              Inspect Architecture →
-            </button>
-          </div>
-        </article>
-
-        <!-- Case Study 3: Custom Plugin / AI Search -->
-        <article data-category="wordpress" class="reveal project-card tactile-card rounded-2xl overflow-hidden flex flex-col justify-between" style="transition-delay: 160ms;">
-          <div>
-            <!-- Light Editorial Browser Preview -->
-            <div class="bg-sand border-b border-ink/15 p-4">
-              <div class="flex items-center justify-between mb-3">
-                <div class="flex items-center gap-1.5">
-                  <span class="w-2.5 h-2.5 rounded-full bg-terracotta"></span>
-                  <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
-                  <span class="w-2.5 h-2.5 rounded-full bg-emeraldDeep"></span>
-                </div>
-                <span class="text-[10px] font-mono font-semibold text-ink bg-white border border-ink/15 px-2.5 py-0.5 rounded-full">/llms.txt • SQL</span>
-              </div>
-              <div class="rounded-xl bg-ink text-cream p-3 font-mono text-[10px] space-y-1 shadow-sm">
-                <p class="text-emerald-400"># WooCommerce Catalog Feed</p>
-                <p>&gt; GET /llms.txt HTTP/1.1 200 OK</p>
-                <p class="text-cream/60">Tokens: 1,420 • Crawler: Logged</p>
-              </div>
-            </div>
-
-            <div class="p-6">
-              <div class="flex items-center justify-between gap-2 mb-3">
-                <span class="text-[11px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-ink text-cream">Plugin R&amp;D • GEO</span>
-                <span class="text-xs font-mono text-ink/60">PHP 8 • MySQL</span>
-              </div>
-              <h3 class="text-lg font-bold text-ink">WooCommerce AI Search &amp; <code>llms.txt</code></h3>
-              <p class="text-sm text-ink/75 mt-2.5 leading-relaxed">
-                Built a custom WordPress plugin compiling WooCommerce product catalogs into token-efficient Markdown endpoints with custom MySQL indexing and bot telemetry.
-              </p>
-            </div>
-          </div>
-
-          <div class="px-6 pb-6 pt-2">
-            <div class="flex flex-wrap gap-1.5 mb-5">
-              <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-sand text-ink/80">Custom Plugin</span>
-              <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-sand text-ink/80">MySQL</span>
-              <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-sand text-ink/80">AI Discovery</span>
-            </div>
-            <button type="button" onclick="openModal('plugin')" class="w-full py-2.5 rounded-xl bg-cream hover:bg-ink hover:text-cream border border-ink/25 text-xs font-mono font-semibold text-ink transition">
-              Inspect Architecture →
-            </button>
-          </div>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- Live Australian Retail Storefronts -->
-    <section id="stores" class="bg-sand/70 border-b border-ink/15 py-20">
-      <div class="max-w-6xl mx-auto px-5">
-        <div class="reveal flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
-          <div>
-            <p class="text-xs font-mono uppercase tracking-wider text-emeraldDeep font-semibold">Production Deployments</p>
-            <h2 class="text-3xl font-extrabold text-ink mt-1.5">Live Australian Retail Storefronts</h2>
-          </div>
-          <p class="text-sm text-ink/70 max-w-md">
-            Commercial D2C storefronts engineered and maintained for Australian retail brands—click any card to inspect the live store.
-          </p>
-        </div>
-
-        <div class="grid md:grid-cols-3 gap-6">
-          <a href="https://attitudesplash.com.au" target="_blank" rel="noopener noreferrer" class="reveal group tactile-card rounded-2xl p-6 flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between mb-4">
-                <span class="text-[11px] font-mono px-2.5 py-1 rounded-full bg-cream border border-ink/15 text-ink">attitudesplash.com.au</span>
-                <span class="w-9 h-9 rounded-full bg-cream border border-ink/20 group-hover:bg-emeraldDeep group-hover:text-white group-hover:border-emeraldDeep flex items-center justify-center text-sm font-mono transition-all duration-300 group-hover:rotate-45">↗</span>
-              </div>
-              <h3 class="text-xl font-bold text-ink group-hover:text-emeraldDeep transition">Attitude Splash</h3>
-              <p class="text-sm text-ink/75 mt-2 leading-relaxed">
-                Swimwear &amp; lifestyle D2C store. Built responsive collection grids, streamlined product variant selectors, and mobile-first cart flows.
-              </p>
-            </div>
-            <div class="mt-6 pt-4 border-t border-ink/10 flex items-center justify-between text-xs font-mono">
-              <span class="text-ink/60">Swimwear &amp; Apparel</span>
-              <span class="text-emeraldDeep font-semibold">● Live Store</span>
-            </div>
-          </a>
-
-          <a href="https://modestoshoes.com.au" target="_blank" rel="noopener noreferrer" class="reveal group tactile-card rounded-2xl p-6 flex flex-col justify-between" style="transition-delay: 80ms;">
-            <div>
-              <div class="flex items-center justify-between mb-4">
-                <span class="text-[11px] font-mono px-2.5 py-1 rounded-full bg-cream border border-ink/15 text-ink">modestoshoes.com.au</span>
-                <span class="w-9 h-9 rounded-full bg-cream border border-ink/20 group-hover:bg-emeraldDeep group-hover:text-white group-hover:border-emeraldDeep flex items-center justify-center text-sm font-mono transition-all duration-300 group-hover:rotate-45">↗</span>
-              </div>
-              <h3 class="text-xl font-bold text-ink group-hover:text-emeraldDeep transition">Modesto Shoes</h3>
-              <p class="text-sm text-ink/75 mt-2 leading-relaxed">
-                Multi-category footwear retailer. Engineered intuitive size/fit variant UX, lazy-loaded high-res product galleries, and clean PDP hierarchy.
-              </p>
-            </div>
-            <div class="mt-6 pt-4 border-t border-ink/10 flex items-center justify-between text-xs font-mono">
-              <span class="text-ink/60">Footwear Retail</span>
-              <span class="text-emeraldDeep font-semibold">● Live Store</span>
-            </div>
-          </a>
-
-          <a href="https://shop.mobile-experts.com.au" target="_blank" rel="noopener noreferrer" class="reveal group tactile-card rounded-2xl p-6 flex flex-col justify-between" style="transition-delay: 160ms;">
-            <div>
-              <div class="flex items-center justify-between mb-4">
-                <span class="text-[11px] font-mono px-2.5 py-1 rounded-full bg-cream border border-ink/15 text-ink">shop.mobile-experts.com.au</span>
-                <span class="w-9 h-9 rounded-full bg-cream border border-ink/20 group-hover:bg-emeraldDeep group-hover:text-white group-hover:border-emeraldDeep flex items-center justify-center text-sm font-mono transition-all duration-300 group-hover:rotate-45">↗</span>
-              </div>
-              <h3 class="text-xl font-bold text-ink group-hover:text-emeraldDeep transition">Mobile Experts</h3>
-              <p class="text-sm text-ink/75 mt-2 leading-relaxed">
-                High-SKU consumer electronics storefront built for fast device-compatibility discovery, clean taxonomy filtering, and structured JSON-LD schema.
-              </p>
-            </div>
-            <div class="mt-6 pt-4 border-t border-ink/10 flex items-center justify-between text-xs font-mono">
-              <span class="text-ink/60">High-SKU Tech Retail</span>
-              <span class="text-emeraldDeep font-semibold">● Live Store</span>
-            </div>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Work Experience & Education -->
-    <section id="experience" class="max-w-6xl mx-auto px-5 py-20 border-b border-ink/15">
-      <div class="grid lg:grid-cols-12 gap-10">
-        <div class="lg:col-span-4 reveal">
-          <p class="text-xs font-mono uppercase tracking-wider text-terracotta font-semibold">Career Track Record</p>
-          <h2 class="text-3xl font-extrabold text-ink mt-1.5">
-            3+ Years Shipping <span class="font-serif italic font-normal text-emeraldDeep">production</span> systems
-          </h2>
-          <p class="text-sm text-ink/75 mt-4 leading-relaxed">
-            Proven track record across agency and product teams—turning Figma design systems into high-converting storefronts while maintaining 90+ PageSpeed benchmarks.
-          </p>
-
-          <!-- Education Card -->
-          <div class="mt-8 tactile-card rounded-2xl p-6 bg-white">
-            <span class="text-[11px] font-mono uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-100 text-emeraldDeep font-semibold">Education</span>
-            <h3 class="text-base font-bold text-ink mt-3">Bachelor of Computer Applications (BCA)</h3>
-            <p class="text-xs text-ink/70 mt-1">Gulzar Group of Institutes, Khanna, Punjab</p>
-            <div class="mt-4 pt-3 border-t border-ink/10 flex items-center justify-between text-xs font-mono">
-              <span class="text-ink/60">2020 – 2023</span>
-              <span class="text-emeraldDeep font-bold">CGPA: 7.92</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="lg:col-span-8 space-y-6">
-          <!-- Role 1 -->
-          <div class="reveal tactile-card rounded-2xl p-6 sm:p-7">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-ink/10">
-              <div>
-                <h3 class="text-lg font-bold text-ink">Web Developer</h3>
-                <p class="text-sm text-emeraldDeep font-semibold">Blue Mile Digital • Mohali, Punjab</p>
-              </div>
-              <span class="text-xs font-mono font-semibold px-3 py-1 rounded-full bg-emerald-100 text-emeraldDeep w-fit">
-                Feb 2025 – Present
-              </span>
-            </div>
-            <ul class="mt-4 space-y-3 text-sm text-ink/80 leading-relaxed">
-              <li class="flex items-start gap-2.5">
-                <span class="text-emeraldDeep font-bold mt-0.5">→</span>
-                <span>Architected and scaled <strong class="text-ink">25+ custom WordPress and Shopify storefronts</strong>, crafting bespoke Liquid templates and custom checkout flows tailored to conversion goals.</span>
-              </li>
-              <li class="flex items-start gap-2.5">
-                <span class="text-emeraldDeep font-bold mt-0.5">→</span>
-                <span>Elevated Core Web Vitals and PageSpeed metrics across client sites, slashing average load times by <strong class="text-ink">35%+</strong> via asset minification, critical CSS, and caching hierarchies.</span>
-              </li>
-              <li class="flex items-start gap-2.5">
-                <span class="text-emeraldDeep font-bold mt-0.5">→</span>
-                <span>Engineered custom WordPress plugins and child themes using <strong class="text-ink">PHP and REST APIs</strong> to sync dynamic product feeds and automate marketing data pipelines.</span>
-              </li>
-              <li class="flex items-start gap-2.5">
-                <span class="text-emeraldDeep font-bold mt-0.5">→</span>
-                <span>Translated complex Figma design systems into pixel-perfect, clean, cross-browser compatible frontend code.</span>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Role 2 -->
-          <div class="reveal tactile-card rounded-2xl p-6 sm:p-7" style="transition-delay: 80ms;">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-ink/10">
-              <div>
-                <h3 class="text-lg font-bold text-ink">Associate Software Developer</h3>
-                <p class="text-sm text-terracotta font-semibold">My Virtual Teams • Ludhiana, Punjab</p>
-              </div>
-              <span class="text-xs font-mono font-semibold px-3 py-1 rounded-full bg-sand border border-ink/15 text-ink w-fit">
-                Jun 2023 – Dec 2024
-              </span>
-            </div>
-            <ul class="mt-4 space-y-3 text-sm text-ink/80 leading-relaxed">
-              <li class="flex items-start gap-2.5">
-                <span class="text-terracotta font-bold mt-0.5">→</span>
-                <span>Engineered bespoke WordPress themes from scratch using <strong class="text-ink">PHP, HTML5, CSS3, and modern JavaScript</strong> adhering to strict WordPress coding standards.</span>
-              </li>
-              <li class="flex items-start gap-2.5">
-                <span class="text-terracotta font-bold mt-0.5">→</span>
-                <span>Boosted Google PageSpeed scores to <strong class="text-ink">90+</strong> across client deployments via image compression pipelines, database query pruning, and CDN configurations.</span>
-              </li>
-              <li class="flex items-start gap-2.5">
-                <span class="text-terracotta font-bold mt-0.5">→</span>
-                <span>Delivered end-to-end technical support, maintenance, and regular version updates across high-traffic multi-site installations and WooCommerce setups.</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Technical Capabilities Bento -->
-    <section id="stack" class="max-w-6xl mx-auto px-5 py-20 border-b border-ink/15">
-      <div class="reveal mb-10">
-        <p class="text-xs font-mono uppercase tracking-wider text-emeraldDeep font-semibold">Capabilities</p>
-        <h2 class="text-3xl font-extrabold text-ink mt-1.5">Technical Stack &amp; Tooling</h2>
-      </div>
-
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        <div class="reveal tactile-card rounded-2xl p-6">
-          <span class="inline-block font-mono text-xs font-bold px-2.5 py-1 rounded-md bg-emerald-100 text-emeraldDeep mb-4">01 / CMS</span>
-          <h3 class="font-bold text-ink text-base mb-3">CMS &amp; E-Commerce</h3>
-          <div class="flex flex-wrap gap-1.5">
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">WordPress</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">WooCommerce</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">Shopify Liquid</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">Gutenberg / FSE</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">ACF Pro</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">Wix / Duda / Instapage</span>
-          </div>
-        </div>
-
-        <div class="reveal tactile-card rounded-2xl p-6" style="transition-delay: 60ms;">
-          <span class="inline-block font-mono text-xs font-bold px-2.5 py-1 rounded-md bg-orange-100 text-terracotta mb-4">02 / UI</span>
-          <h3 class="font-bold text-ink text-base mb-3">Frontend Development</h3>
-          <div class="flex flex-wrap gap-1.5">
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">HTML5</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">CSS3 / SCSS</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">JavaScript (ES6+)</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">Tailwind CSS</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">Bootstrap</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">Figma-to-Code</span>
-          </div>
-        </div>
-
-        <div class="reveal tactile-card rounded-2xl p-6" style="transition-delay: 120ms;">
-          <span class="inline-block font-mono text-xs font-bold px-2.5 py-1 rounded-md bg-sky-100 text-sky-800 mb-4">03 / API</span>
-          <h3 class="font-bold text-ink text-base mb-3">Backend &amp; Integrations</h3>
-          <div class="flex flex-wrap gap-1.5">
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">PHP</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">MySQL</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">WP REST API</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">Webhooks</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">Payment Gateways</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">Shipping APIs</span>
-          </div>
-        </div>
-
-        <div class="reveal tactile-card rounded-2xl p-6" style="transition-delay: 180ms;">
-          <span class="inline-block font-mono text-xs font-bold px-2.5 py-1 rounded-md bg-amber-100 text-amber-900 mb-4">04 / OPS</span>
-          <h3 class="font-bold text-ink text-base mb-3">Speed &amp; Workflow</h3>
-          <div class="flex flex-wrap gap-1.5">
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">Core Web Vitals</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">PageSpeed 90+</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">Git / GitHub</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">Vite</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">LocalWP</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">cPanel / CDN</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="max-w-6xl mx-auto px-5 py-20">
-      <div class="reveal tactile-card rounded-3xl p-8 sm:p-12 bg-white grid lg:grid-cols-12 gap-10 items-start">
-        <div class="lg:col-span-6">
-          <p class="text-xs font-mono uppercase tracking-wider text-terracotta font-semibold">Let's Connect</p>
-          <h2 class="text-3xl sm:text-4xl font-extrabold text-ink mt-2 leading-tight">
-            Ready to ship <span class="font-serif italic font-normal text-emeraldDeep">faster code</span> &amp; higher-converting stores.
-          </h2>
-          <p class="text-sm sm:text-base text-ink/75 mt-4 leading-relaxed">
-            Available for full-time or remote web engineering roles (Australia, UK, New Zealand, EU, India) as well as custom Shopify &amp; WordPress builds.
-          </p>
-
-          <div class="mt-8 space-y-3.5 text-sm font-mono">
-            <div class="flex items-center gap-3 text-ink">
-              <span class="text-emeraldDeep font-bold">Email:</span>
-              <a href="mailto:gurpreet231201@gmail.com" class="underline decoration-ink/30 hover:decoration-emeraldDeep hover:text-emeraldDeep transition">gurpreet231201@gmail.com</a>
-            </div>
-            <div class="flex items-center gap-3 text-ink">
-              <span class="text-emeraldDeep font-bold">Phone:</span>
-              <a href="tel:+917009202092" class="underline decoration-ink/30 hover:decoration-emeraldDeep hover:text-emeraldDeep transition">+91 7009202092</a>
-            </div>
-            <div class="flex items-center gap-3 text-ink">
-              <span class="text-emeraldDeep font-bold">LinkedIn:</span>
-              <a href="https://www.linkedin.com/in/gurpreet-singh-0252201b6" target="_blank" rel="noopener noreferrer" class="underline decoration-ink/30 hover:decoration-emeraldDeep hover:text-emeraldDeep transition">/in/gurpreet-singh-0252201b6</a>
-            </div>
-            <div class="flex items-center gap-3 text-ink/70">
-              <span class="text-emeraldDeep font-bold">Timezone:</span>
-              <span>IST (UTC+5:30) — Daily overlap with AU/NZ &amp; UK/EU</span>
-            </div>
-          </div>
-        </div>
-
-        <form id="inquiryForm" class="lg:col-span-6 bg-cream border-[1.5px] border-ink rounded-2xl p-6 space-y-4">
-          <div>
-            <label for="senderName" class="block text-xs font-mono font-semibold text-ink mb-1.5">Your Name / Company</label>
-            <input id="senderName" type="text" required placeholder="Sarah Jenkins — Melbourne Digital"
-              class="w-full px-4 py-3 rounded-xl bg-white border border-ink/25 text-sm text-ink placeholder-ink/40 focus:outline-none focus:border-emeraldDeep transition" />
-          </div>
-
-          <div>
-            <label for="inquiryType" class="block text-xs font-mono font-semibold text-ink mb-1.5">Inquiry Purpose</label>
-            <select id="inquiryType"
-              class="w-full px-4 py-3 rounded-xl bg-white border border-ink/25 text-sm text-ink focus:outline-none focus:border-emeraldDeep transition">
-              <option value="Full-Time / Remote Developer Role">Full-Time / Remote Developer Role</option>
-              <option value="Shopify / WooCommerce Storefront Build">Shopify / WooCommerce Storefront Build</option>
-              <option value="Core Web Vitals & Speed Optimization">Core Web Vitals &amp; Speed Optimization</option>
-              <option value="Custom WordPress Plugin / API Integration">Custom WordPress Plugin / API Integration</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="inquiryDetails" class="block text-xs font-mono font-semibold text-ink mb-1.5">Role Details or Store URL</label>
-            <textarea id="inquiryDetails" rows="3" required placeholder="Share role requirements, timezone overlap, or your store link..."
-              class="w-full px-4 py-3 rounded-xl bg-white border border-ink/25 text-sm text-ink placeholder-ink/40 focus:outline-none focus:border-emeraldDeep transition"></textarea>
-          </div>
-
-          <button type="submit" class="w-full py-3.5 rounded-full bg-ink text-cream font-semibold text-sm hover:bg-emeraldDeep transition-colors duration-300">
-            Send Direct Email Inquiry →
-          </button>
-        </form>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="border-t border-ink/15 bg-sand/60 py-8 text-center text-xs font-mono text-ink/65">
-    © 2026 Gurpreet Singh • Ludhiana, Punjab, India • Built with Daylight Editorial Precision
-  </footer>
-
-  <!-- Interactive Architecture Modal -->
-  <div id="archModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/60 backdrop-blur-sm">
-    <div class="tactile-card bg-white max-w-xl w-full rounded-2xl p-6 sm:p-8 relative">
-      <button type="button" onclick="closeModal()" aria-label="Close modal" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-sand hover:bg-ink hover:text-cream text-ink flex items-center justify-center font-mono text-sm transition">
-        ✕
-      </button>
-      <p id="modalBadge" class="text-xs font-mono font-semibold text-emeraldDeep uppercase tracking-wider"></p>
-      <h3 id="modalTitle" class="text-xl sm:text-2xl font-extrabold text-ink mt-1"></h3>
-      <p id="modalSummary" class="text-sm text-ink/75 mt-3 leading-relaxed"></p>
-      <div class="mt-5 pt-5 border-t border-ink/10">
-        <p class="text-xs font-mono uppercase tracking-wider text-ink/60 font-semibold mb-3">Technical Implementation Highlights</p>
-        <ul id="modalBullets" class="space-y-2.5 text-sm text-ink/85"></ul>
-      </div>
-      <div class="mt-6 pt-4 border-t border-ink/10 flex flex-wrap items-center justify-between gap-3">
-        <span id="modalMetric" class="text-xs font-mono text-emeraldDeep font-bold"></span>
-        <a href="#contact" onclick="closeModal()" class="text-xs font-semibold px-4 py-2 rounded-full bg-ink text-cream hover:bg-emeraldDeep transition">
-          Discuss Similar Build
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // Top Scroll Progress Bar
-    window.addEventListener('scroll', () => {
-      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
-      document.getElementById('scrollProgress').style.width = progress + '%';
-    }, { passive: true });
-
-    // Mobile Menu Toggle
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    mobileMenuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-    });
-
-    // One-Click Copy Email
-    const copyBtn = document.getElementById('copyEmailHero');
-    const copyText = document.getElementById('copyEmailHeroText');
-    copyBtn.addEventListener('click', () => {
-      navigator.clipboard.writeText('gurpreet231201@gmail.com');
-      copyText.textContent = 'Copied to clipboard!';
-      copyBtn.classList.add('border-emeraldDeep', 'text-emeraldDeep');
-      setTimeout(() => {
-        copyText.textContent = 'gurpreet231201@gmail.com';
-        copyBtn.classList.remove('border-emeraldDeep', 'text-emeraldDeep');
-      }, 2200);
-    });
-
-    // Scroll Reveal Choreography
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-
-    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-    // Animated Number Counters
-    document.querySelectorAll('.count-up').forEach(counter => {
-      const target = parseInt(counter.getAttribute('data-target'), 10);
-      let current = 0;
-      const step = Math.max(1, Math.ceil(target / 30));
-      const timer = setInterval(() => {
-        current += step;
-        if (current >= target) {
-          counter.textContent = target;
-          clearInterval(timer);
-        } else {
-          counter.textContent = current;
-        }
-      }, 30);
-    });
-
-    // Category Filter Tabs
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const projectCards = document.querySelectorAll('.project-card');
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBtns.forEach(b => {
-          b.classList.remove('bg-ink', 'text-cream', 'font-semibold');
-          b.classList.add('bg-white', 'border', 'border-ink/20', 'text-ink');
-        });
-        btn.classList.add('bg-ink', 'text-cream', 'font-semibold');
-        btn.classList.remove('bg-white', 'border', 'border-ink/20', 'text-ink');
-
-        const filter = btn.getAttribute('data-filter');
-        projectCards.forEach(card => {
-          if (filter === 'all' || card.getAttribute('data-category') === filter) {
-            card.classList.remove('hidden');
-          } else {
-            card.classList.add('hidden');
-          }
-        });
-      });
-    });
-
-    // Architecture Modal Data
-    const modalData = {
-      shopify: {
-        badge: 'Shopify • Liquid • CRO Architecture',
+    /* -------------------- DATA -------------------- */
+    const CASE_STUDIES = [
+      {
+        id: 'shopify',
+        category: 'shopify',
+        badge: 'Shopify • Liquid • CRO',
+        metricBadge: '+22% Mobile CVR',
         title: 'Custom E-Commerce Storefront Architecture',
-        summary: 'Built a lightweight, high-converting Shopify storefront engineered to eliminate third-party app script bloat while supporting multi-currency international checkout.',
-        bullets: [
-          'Engineered instant AJAX slide-out cart drawer with dynamic upsell thresholds and zero full-page reloads.',
-          'Implemented custom faceted collection filtering and predictive search via Storefront AJAX APIs.',
-          'Deferred non-critical third-party pixels and inlined critical above-the-fold CSS to hit sub-1.8s load times.'
+        summary: 'Engineered custom product filtering, slide-out AJAX cart drawers, and multi-currency checkout configurations—boosting mobile conversions by 22% with sub-1.8s load times.',
+        tags: ['Shopify Liquid', 'ES6+ JavaScript', 'AJAX Cart', 'Multi-Currency'],
+        highlights: [
+          'Built zero-reload AJAX slide-out cart drawer with dynamic free-shipping thresholds and cross-sell logic.',
+          'Replaced 4 heavy third-party filter apps with native Storefront AJAX collection filtering.',
+          'Inlined critical above-the-fold CSS and deferred non-essential pixels to hit sub-1.8s mobile LCP.'
         ],
-        metric: 'Result: +22% Mobile Conversion Lift • <1.8s Load Time'
+        outcome: 'Result: +22% Mobile Checkout Conversion • <1.8s Load Speed'
       },
-      wordpress: {
-        badge: 'WordPress • ACF Pro • Gutenberg / FSE',
+      {
+        id: 'wordpress',
+        category: 'wordpress',
+        badge: 'WordPress • ACF Pro • FSE',
+        metricBadge: '50% Faster Build',
         title: 'Modular Corporate & Headless-Ready Theme',
-        summary: 'Architected a custom block-based WordPress theme designed for non-technical marketing teams to assemble landing pages rapidly without breaking visual consistency.',
-        bullets: [
-          'Built 18+ reusable custom Gutenberg blocks powered by ACF Pro with strict PHP output escaping and zero inline bloat.',
-          'Exposed clean custom REST API endpoints for dynamic content syndication and decoupled frontend integrations.',
-          'Configured automated WebP image pipelines and object caching to maintain 90+ PageSpeed scores.'
+        summary: 'Developed a headless-ready modular block theme featuring custom ACF Gutenberg blocks and REST API endpoints, reducing page assembly time for content teams by 50%.',
+        tags: ['Gutenberg / FSE', 'ACF Pro', 'WP REST API', 'PHP 8'],
+        highlights: [
+          'Architected 18+ reusable custom Gutenberg blocks backed by strict PHP output sanitization.',
+          'Exposed clean REST API endpoints for dynamic content syndication and decoupled frontend views.',
+          'Configured WebP asset pipelines and object caching to sustain 90+ PageSpeed Insights scores.'
         ],
-        metric: 'Result: 50% Faster Page Assembly • 90+ PageSpeed'
+        outcome: 'Result: 50% Reduction in Page Assembly Time • 90+ PageSpeed'
       },
-      plugin: {
-        badge: 'WordPress Plugin • PHP 8 • MySQL',
+      {
+        id: 'plugin',
+        category: 'wordpress',
+        badge: 'Plugin Engineering • GEO',
+        metricBadge: '/llms.txt • SQL',
         title: 'WooCommerce AI Search & llms.txt Engine',
-        summary: 'Custom WordPress/WooCommerce plugin that structures product catalogs, pricing, and specs into clean Markdown endpoints readable by LLM answer engines.',
-        bullets: [
-          'Created custom MySQL tables for pre-compiled Markdown documents and lightweight AI crawler analytics.',
-          'Registered virtual rewrite endpoints (/llms.txt) serving structured catalog summaries with minimal server overhead.',
-          'Added automatic WooCommerce product-save hooks to keep Markdown feeds synchronized in real time.'
+        summary: 'Engineered a custom WordPress plugin compiling WooCommerce product catalogs into token-efficient Markdown endpoints (/llms.txt) with custom MySQL indexing and bot telemetry.',
+        tags: ['Custom Plugin', 'MySQL', 'WooCommerce Hooks', 'AI Discovery'],
+        highlights: [
+          'Designed custom SQL tables for pre-compiled Markdown documents and lightweight AI crawler analytics.',
+          'Registered virtual rewrite endpoints (/llms.txt) serving structured catalog feeds with minimal overhead.',
+          'Hooked into WooCommerce product-save actions to synchronize catalog updates in real time.'
         ],
-        metric: 'Result: Native AI Engine Discoverability • Zero Frontend Impact'
+        outcome: 'Result: Native AI Search Discoverability • Zero Frontend Bloat'
       }
-    };
+    ];
 
-    const modal = document.getElementById('archModal');
-    function openModal(key) {
-      const data = modalData[key];
-      if (!data) return;
-      document.getElementById('modalBadge').textContent = data.badge;
-      document.getElementById('modalTitle').textContent = data.title;
-      document.getElementById('modalSummary').textContent = data.summary;
-      document.getElementById('modalMetric').textContent = data.metric;
-      const list = document.getElementById('modalBullets');
-      list.innerHTML = data.bullets.map(item => `<li class="flex items-start gap-2.5"><span class="text-emeraldDeep font-bold mt-0.5">→</span><span>${item}</span></li>`).join('');
-      modal.classList.remove('hidden');
+    const LIVE_STORES = [
+      {
+        name: 'Attitude Splash',
+        url: 'https://attitudesplash.com.au',
+        domain: 'attitudesplash.com.au',
+        sector: 'Swimwear & Lifestyle D2C • Australia',
+        summary: 'Full storefront build and mobile UX optimization for an Australian swimwear & lifestyle brand. Streamlined collection filtering, variant selection, and mobile cart flow.',
+        focus: ['Mobile-first collection grids', 'Streamlined variant & size selector', 'Checkout friction reduction']
+      },
+      {
+        name: 'Modesto Shoes',
+        url: 'https://modestoshoes.com.au',
+        domain: 'modestoshoes.com.au',
+        sector: 'Footwear Retail • Australia',
+        summary: 'End-to-end e-commerce storefront for a multi-category footwear retailer. Engineered responsive product templates, lazy-loaded high-res galleries, and clean size UX.',
+        focus: ['Size & style variant UX', 'Lazy-loaded PDP image pipeline', 'Clean merchandising hierarchy']
+      },
+      {
+        name: 'Mobile Experts',
+        url: 'https://shop.mobile-experts.com.au',
+        domain: 'shop.mobile-experts.com.au',
+        sector: 'High-SKU Tech Retail • Australia',
+        summary: 'High-SKU electronics and accessories storefront built for rapid device-compatibility discovery, structured taxonomy filtering, and technical SEO schema markup.',
+        focus: ['Multi-device taxonomy architecture', 'Fast SKU search & filtering', 'Structured JSON-LD schema']
+      }
+    ];
+
+    const EXPERIENCE_LIST = [
+      {
+        role: 'Web Developer',
+        company: 'Blue Mile Digital',
+        location: 'Mohali, Punjab',
+        period: 'Feb 2025 – Present',
+        current: true,
+        bullets: [
+          'Architected and scaled 25+ custom WordPress and Shopify storefronts, creating bespoke Liquid templates and custom checkout flows tailored to conversion goals.',
+          'Elevated PageSpeed and Core Web Vitals across client websites, slashing average load times by 35%+ through asset minification, critical CSS, and caching hierarchies.',
+          'Engineered custom WordPress plugins and child themes utilizing PHP and REST APIs to sync dynamic product feeds and automate marketing data pipelines.',
+          'Transformed complex Figma design systems into pixel-perfect, clean, cross-browser compatible frontend code.'
+        ]
+      },
+      {
+        role: 'Associate Software Developer',
+        company: 'My Virtual Teams',
+        location: 'Ludhiana, Punjab',
+        period: 'Jun 2023 – Dec 2024',
+        current: false,
+        bullets: [
+          'Engineered bespoke WordPress themes from scratch using PHP, HTML5, CSS3, and modern JavaScript adhering to strict WordPress coding standards.',
+          'Boosted Google PageSpeed scores to 90+ across client deployments via image compression pipelines, database query pruning, and CDN configurations.',
+          'Provided end-to-end technical support, maintenance, and regular version updates across high-traffic multi-site installations and WooCommerce setups.'
+        ]
+      }
+    ];
+
+    const TECH_STACK = [
+      {
+        title: 'CMS & E-Commerce',
+        accent: 'bg-blue-50 text-brand border-blue-200/70',
+        items: ['WordPress', 'WooCommerce', 'Shopify (Liquid)', 'Gutenberg / FSE', 'ACF Pro', 'Wix / Duda / Instapage']
+      },
+      {
+        title: 'Frontend & UI',
+        accent: 'bg-emerald-50 text-mint border-emerald-200/70',
+        items: ['HTML5 & CSS3', 'SCSS', 'JavaScript (ES6+)', 'Tailwind CSS', 'Bootstrap', 'Figma-to-Code']
+      },
+      {
+        title: 'Backend & APIs',
+        accent: 'bg-indigo-50 text-indigo-600 border-indigo-200/70',
+        items: ['PHP 8+', 'MySQL', 'WordPress REST API', 'Webhooks', 'Payment Gateways', 'Shipping APIs']
+      },
+      {
+        title: 'Speed & DevOps',
+        accent: 'bg-amber-50 text-amber-700 border-amber-200/70',
+        items: ['Core Web Vitals', 'PageSpeed 90+', 'Git / GitHub', 'Vite', 'LocalWP', 'cPanel & CDN']
+      }
+    ];
+
+    const FAQS = [
+      {
+        q: 'What timezone overlap do you offer for Australian, UK, and European teams?',
+        a: 'Based in IST (UTC+5:30), I have 4–5 hours of daily live overlap with Australian business hours (AEST/AEDT) for afternoon standups and handoffs, plus full afternoon/evening overlap with UK and European morning hours.'
+      },
+      {
+        q: 'How do you consistently achieve 90+ PageSpeed and sub-2s load times?',
+        a: 'I eliminate heavy page-builder and third-party app bloat by writing lean Liquid/PHP templates, inlining critical above-the-fold CSS, converting media to responsive WebP/AVIF pipelines, pruning slow SQL queries, and deferring non-critical tracking scripts.'
+      },
+      {
+        q: 'Are you available for both full-time remote roles and direct client builds?',
+        a: 'Yes. I am open to full-time or long-term contract Full-Stack CMS / Shopify / WordPress Developer roles internationally, as well as scoped storefront builds and speed optimization audits for D2C e-commerce brands.'
+      }
+    ];
+
+    /* -------------------- REUSABLE HOOKS -------------------- */
+    function useReveal() {
+      const ref = useRef(null);
+      const [visible, setVisible] = useState(false);
+
+      useEffect(() => {
+        const el = ref.current;
+        if (!el) return;
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              setVisible(true);
+              observer.unobserve(el);
+            }
+          },
+          { threshold: 0.12 }
+        );
+        observer.observe(el);
+        return () => observer.disconnect();
+      }, []);
+
+      return [ref, visible];
     }
 
-    function closeModal() {
-      modal.classList.add('hidden');
+    function RevealBlock({ children, delay = 0, className = '' }) {
+      const [ref, visible] = useReveal();
+      return (
+        <div
+          ref={ref}
+          style={{ transitionDelay: `${delay}ms` }}
+          className={`transition-all duration-700 ease-out ${
+            visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+          } ${className}`}
+        >
+          {children}
+        </div>
+      );
     }
 
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeModal();
-    });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeModal();
-    });
+    /* -------------------- MAIN APP -------------------- */
+    function App() {
+      const [mobileOpen, setMobileOpen] = useState(false);
+      const [audience, setAudience] = useState('recruiter'); // 'recruiter' | 'client'
+      const [filter, setFilter] = useState('all');
+      const [activeStoreIdx, setActiveStoreIdx] = useState(0);
+      const [openFaqIdx, setOpenFaqIdx] = useState(0);
+      const [selectedProject, setSelectedProject] = useState(null);
+      const [copied, setCopied] = useState(false);
+      const [scrollPct, setScrollPct] = useState(0);
 
-    // Contact Form Mailto Composer
-    document.getElementById('inquiryForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-      const name = document.getElementById('senderName').value.trim();
-      const type = document.getElementById('inquiryType').value;
-      const details = document.getElementById('inquiryDetails').value.trim();
-      const subject = encodeURIComponent(`[Portfolio Inquiry] ${type} — ${name}`);
-      const body = encodeURIComponent(`Hi Gurpreet,\n\nName / Company: ${name}\nInquiry Type: ${type}\n\nDetails:\n${details}\n`);
-      window.location.href = `mailto:gurpreet231201@gmail.com?subject=${subject}&body=${body}`;
-    });
+      // Controlled form state
+      const [formName, setFormName] = useState('');
+      const [formType, setFormType] = useState('Full-Time / Remote Engineering Role');
+      const [formDetails, setFormDetails] = useState('');
+
+      useEffect(() => {
+        const onScroll = () => {
+          const top = document.documentElement.scrollTop || document.body.scrollTop;
+          const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+          setScrollPct(height > 0 ? (top / height) * 100 : 0);
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+      }, []);
+
+      useEffect(() => {
+        const onKey = (e) => {
+          if (e.key === 'Escape') setSelectedProject(null);
+        };
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+      }, []);
+
+      const handleCopyEmail = () => {
+        navigator.clipboard.writeText('gurpreet231201@gmail.com');
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2200);
+      };
+
+      const handleFormSubmit = (e) => {
+        e.preventDefault();
+        const subject = encodeURIComponent(`[Portfolio Inquiry] ${formType} — ${formName}`);
+        const body = encodeURIComponent(
+          `Hi Gurpreet,\n\nName / Company: ${formName}\nInquiry Type: ${formType}\n\nDetails:\n${formDetails}\n`
+        );
+        window.location.href = `mailto:gurpreet231201@gmail.com?subject=${subject}&body=${body}`;
+      };
+
+      const filteredProjects =
+        filter === 'all' ? CASE_STUDIES : CASE_STUDIES.filter((p) => p.category === filter);
+
+      const activeStore = LIVE_STORES[activeStoreIdx];
+
+      return (
+        <div className="min-h-screen flex flex-col">
+          {/* Top Scroll Progress Bar */}
+          <div
+            style={{ width: `${scrollPct}%` }}
+            className="fixed top-0 left-0 h-[3px] bg-gradient-to-r from-brand via-blue-500 to-mint z-50 transition-[width] duration-75"
+          />
+
+          {/* Sticky Frosted Header */}
+          <header className="sticky top-0 z-40 bg-white/85 backdrop-blur-xl border-b border-slate-200/80">
+            <div className="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
+              <a href="#" className="flex items-center gap-2.5 group">
+                <span className="w-9 h-9 rounded-xl bg-brand text-white flex items-center justify-center font-bold text-xs tracking-tight shadow-sm group-hover:bg-brandDark transition">
+                  GS
+                </span>
+                <div className="leading-tight">
+                  <span className="font-bold text-sm text-navy block">Gurpreet Singh</span>
+                  <span className="font-mono text-[11px] text-slate-500 block">CMS &amp; E-Commerce Dev</span>
+                </div>
+              </a>
+
+              <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-slate-600">
+                <a href="#work" className="hover:text-brand transition">Case Studies</a>
+                <a href="#stores" className="hover:text-brand transition">Live AU Stores</a>
+                <a href="#experience" className="hover:text-brand transition">Experience</a>
+                <a href="#stack" className="hover:text-brand transition">Tech Stack</a>
+                <a href="#faq" className="hover:text-brand transition">FAQ</a>
+              </nav>
+
+              <div className="flex items-center gap-2.5">
+                <a
+                  href="./Gurpreet-Singh-Resume.pdf"
+                  download
+                  className="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold px-3.5 py-2 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300 hover:bg-slate-100 transition"
+                >
+                  <span>Resume.pdf</span>
+                  <span className="text-brand">↓</span>
+                </a>
+                <a
+                  href="#contact"
+                  className="text-xs font-semibold px-4 py-2.5 rounded-xl bg-brand text-white hover:bg-brandDark transition shadow-sm shadow-brand/25"
+                >
+                  Book a Call / Hire
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setMobileOpen(!mobileOpen)}
+                  aria-label="Toggle Menu"
+                  className="md:hidden p-2 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d={mobileOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'} />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {mobileOpen && (
+              <div className="md:hidden border-t border-slate-200 bg-white px-5 py-4 space-y-3 text-sm font-medium">
+                <a href="#work" onClick={() => setMobileOpen(false)} className="block text-slate-700 hover:text-brand">Case Studies</a>
+                <a href="#stores" onClick={() => setMobileOpen(false)} className="block text-slate-700 hover:text-brand">Live AU Stores</a>
+                <a href="#experience" onClick={() => setMobileOpen(false)} className="block text-slate-700 hover:text-brand">Experience</a>
+                <a href="#stack" onClick={() => setMobileOpen(false)} className="block text-slate-700 hover:text-brand">Tech Stack</a>
+                <a href="./Gurpreet-Singh-Resume.pdf" download className="block font-mono text-xs text-brand pt-2 border-t border-slate-100">
+                  Download Resume (PDF) ↓
+                </a>
+              </div>
+            )}
+          </header>
+
+          <main className="flex-1">
+            {/* Hero Section */}
+            <section className="hero-mesh subtle-grid border-b border-slate-200/80">
+              <div className="max-w-6xl mx-auto px-5 py-16 sm:py-24">
+                <div className="grid lg:grid-cols-12 gap-12 items-center">
+                  {/* Left Hero Copy */}
+                  <div className="lg:col-span-7 animate-fade-up">
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/70 text-xs font-semibold text-brand mb-6">
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-mint opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-mint"></span>
+                      </span>
+                      Available for International Roles (AU • UK • NZ • EU • Remote) &amp; D2C Builds
+                    </div>
+
+                    <h1 className="text-4xl sm:text-5xl lg:text-[3.3rem] font-extrabold tracking-tight text-navy leading-[1.12]">
+                      High-converting <span className="text-brand">Shopify &amp; WordPress</span> systems engineered for sub-2s speed.
+                    </h1>
+
+                    <p className="mt-5 text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
+                      I'm <strong className="text-navy font-semibold">Gurpreet Singh</strong>—a Full-Stack CMS &amp; E-Commerce Developer with <strong className="text-navy font-semibold">3+ years of experience</strong> scaling 25+ custom storefronts, bespoke Liquid themes, and REST API integrations.
+                    </p>
+
+                    {/* Dual-Audience Stateful Switcher */}
+                    <div className="mt-7 p-4 rounded-2xl bg-slate-50/90 border border-slate-200/90 max-w-xl">
+                      <div className="flex items-center gap-2 mb-3">
+                        <button
+                          type="button"
+                          onClick={() => setAudience('recruiter')}
+                          className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition ${
+                            audience === 'recruiter'
+                              ? 'bg-navy text-white shadow-sm'
+                              : 'text-slate-600 hover:text-navy'
+                          }`}
+                        >
+                          For Hiring Managers
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setAudience('client')}
+                          className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition ${
+                            audience === 'client'
+                              ? 'bg-navy text-white shadow-sm'
+                              : 'text-slate-600 hover:text-navy'
+                          }`}
+                        >
+                          For E-Commerce Brands
+                        </button>
+                      </div>
+
+                      {audience === 'recruiter' ? (
+                        <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                          <strong className="text-navy">Production Ownership:</strong> Clean PHP 8, Liquid, ES6+, and Gutenberg/ACF Pro architecture with Git workflows, REST API integrations, and daily timezone overlap for AU/NZ &amp; UK/EU teams.
+                        </p>
+                      ) : (
+                        <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                          <strong className="text-navy">Commercial Revenue Impact:</strong> Zero-bloat custom storefronts that cut load times by 35%+, achieve 90+ PageSpeed scores, and lift mobile checkout conversions by up to 22%.
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Primary CTAs */}
+                    <div className="mt-8 flex flex-wrap items-center gap-3.5">
+                      <a
+                        href="#work"
+                        className="px-6 py-3.5 rounded-xl bg-brand text-white font-semibold text-sm hover:bg-brandDark transition shadow-md shadow-brand/20"
+                      >
+                        Explore Case Studies →
+                      </a>
+                      <a
+                        href="./Gurpreet-Singh-Resume.pdf"
+                        download
+                        className="px-5 py-3.5 rounded-xl bg-white border border-slate-200 text-navy font-semibold text-sm hover:border-slate-300 hover:bg-slate-50 transition shadow-sm"
+                      >
+                        Download CV (PDF)
+                      </a>
+                      <button
+                        type="button"
+                        onClick={handleCopyEmail}
+                        className="px-4 py-3.5 rounded-xl bg-white border border-slate-200 text-xs font-mono text-slate-600 hover:text-brand hover:border-brand/40 transition flex items-center gap-2"
+                      >
+                        <span>{copied ? 'Copied email!' : 'gurpreet231201@gmail.com'}</span>
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                          <rect x="9" y="9" width="13" height="13" rx="2" />
+                          <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                        </svg>
+                      </button>
+                    </div>
+
+                    {/* Profile Links */}
+                    <div className="mt-7 flex flex-wrap items-center gap-6 text-xs font-mono text-slate-500">
+                      <a href="https://github.com/Gurpreetsi2312" target="_blank" rel="noopener noreferrer" className="hover:text-brand transition flex items-center gap-2">
+                        <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        github.com/Gurpreetsi2312
+                      </a>
+                      <a href="https://www.linkedin.com/in/gurpreet-singh-0252201b6" target="_blank" rel="noopener noreferrer" className="hover:text-brand transition flex items-center gap-2">
+                        <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                        LinkedIn Profile
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Right Hero Telemetry Dashboard */}
+                  <div className="lg:col-span-5 grid grid-cols-2 gap-4 animate-fade-up">
+                    {/* Lighthouse Performance Card */}
+                    <div className="col-span-2 bg-white rounded-2xl border border-slate-200/90 p-6 shadow-soft flex items-center justify-between gap-4">
+                      <div>
+                        <span className="inline-flex items-center gap-1.5 text-[11px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-emerald-50 text-mint border border-emerald-200/70">
+                          ● Core Web Vitals
+                        </span>
+                        <h2 className="text-lg font-bold text-navy mt-2">90+ PageSpeed Standard</h2>
+                        <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                          Critical CSS, image compression pipelines, caching hierarchies &amp; DB query pruning.
+                        </p>
+                      </div>
+                      <div className="relative w-20 h-20 shrink-0 flex items-center justify-center">
+                        <svg className="w-20 h-20 -rotate-90" viewBox="0 0 80 80">
+                          <circle cx="40" cy="40" r="32" stroke="#E2E8F0" strokeWidth="6" fill="none" />
+                          <circle cx="40" cy="40" r="32" stroke="#059669" strokeWidth="6" strokeDasharray="201" strokeDashoffset="10" strokeLinecap="round" fill="none" />
+                        </svg>
+                        <span className="absolute font-mono text-lg font-bold text-navy">96</span>
+                      </div>
+                    </div>
+
+                    {/* KPI 1 */}
+                    <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-soft">
+                      <p className="text-3xl font-extrabold text-navy tabular-nums">25+</p>
+                      <p className="text-xs font-semibold text-slate-700 mt-1">Production Stores</p>
+                      <p className="text-[11px] text-slate-400 mt-0.5">WordPress &amp; Shopify</p>
+                    </div>
+
+                    {/* KPI 2 */}
+                    <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-soft">
+                      <p className="text-3xl font-extrabold text-mint tabular-nums">+22%</p>
+                      <p className="text-xs font-semibold text-slate-700 mt-1">Mobile Conversion</p>
+                      <p className="text-[11px] text-slate-400 mt-0.5">Sub-1.8s Liquid UX</p>
+                    </div>
+
+                    {/* Speed Benchmark Comparison */}
+                    <div className="col-span-2 bg-white rounded-2xl border border-slate-200/90 p-5 shadow-soft">
+                      <div className="flex items-center justify-between text-xs mb-3">
+                        <span className="font-semibold text-slate-700">Avg. Client Load Time Reduction</span>
+                        <span className="font-mono font-bold text-brand bg-blue-50 px-2 py-0.5 rounded">-35%+ Faster</span>
+                      </div>
+                      <div className="space-y-3 text-[11px] font-mono">
+                        <div>
+                          <div className="flex justify-between text-slate-400 mb-1">
+                            <span>Bloated Theme / App Stack</span>
+                            <span>3.4s LCP</span>
+                          </div>
+                          <div className="w-full h-2 rounded-full bg-slate-100 overflow-hidden">
+                            <div className="w-[82%] h-full rounded-full bg-slate-300"></div>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="flex justify-between text-navy font-semibold mb-1">
+                            <span>Custom Engineered Storefront</span>
+                            <span className="text-mint">1.7s LCP</span>
+                          </div>
+                          <div className="w-full h-2 rounded-full bg-slate-100 overflow-hidden">
+                            <div className="w-[41%] h-full rounded-full bg-gradient-to-r from-brand to-mint"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Clean Light Ticker Strip */}
+            <div className="marquee-box bg-white border-b border-slate-200/80 py-3.5 overflow-hidden select-none">
+              <div className="animate-marquee flex items-center gap-8 font-mono text-xs text-slate-500">
+                {[0, 1].map((dup) => (
+                  <span key={dup} className="flex items-center gap-8">
+                    <span className="text-navy font-medium">Shopify Liquid Architecture</span>
+                    <span className="text-brand">•</span>
+                    <span>WordPress Custom Themes &amp; Plugins</span>
+                    <span className="text-mint">•</span>
+                    <span className="text-navy font-medium">Core Web Vitals 90+</span>
+                    <span className="text-brand">•</span>
+                    <span>Gutenberg / FSE &amp; ACF Pro</span>
+                    <span className="text-mint">•</span>
+                    <span className="text-navy font-medium">WooCommerce AI &amp; llms.txt</span>
+                    <span className="text-brand">•</span>
+                    <span>REST API &amp; Webhook Pipelines</span>
+                    <span className="text-mint">•</span>
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Engineering Case Studies */}
+            <section id="work" className="max-w-6xl mx-auto px-5 py-20 border-b border-slate-200/80">
+              <RevealBlock className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+                <div>
+                  <span className="text-xs font-mono font-semibold uppercase tracking-wider text-brand">Engineering Case Studies</span>
+                  <h2 className="text-3xl sm:text-4xl font-extrabold text-navy mt-1.5">
+                    Architecture &amp; Measurable Outcomes
+                  </h2>
+                </div>
+
+                {/* Stateful Filter Pills */}
+                <div className="inline-flex p-1 rounded-xl bg-slate-200/70 border border-slate-200">
+                  {[
+                    { key: 'all', label: 'All Builds' },
+                    { key: 'shopify', label: 'Shopify / Liquid' },
+                    { key: 'wordpress', label: 'WordPress / Plugins' }
+                  ].map((tab) => (
+                    <button
+                      key={tab.key}
+                      type="button"
+                      onClick={() => setFilter(tab.key)}
+                      className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition ${
+                        filter === tab.key
+                          ? 'bg-white text-navy shadow-sm'
+                          : 'text-slate-600 hover:text-navy'
+                      }`}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+              </RevealBlock>
+
+              <div className="grid md:grid-cols-3 gap-7">
+                {filteredProjects.map((project, idx) => (
+                  <RevealBlock key={project.id} delay={idx * 80}>
+                    <article className="h-full bg-white rounded-2xl border border-slate-200/90 shadow-soft hover:shadow-cardHover hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+                      <div>
+                        {/* Clean UI Preview Header */}
+                        <div className="bg-slate-50 border-b border-slate-200/80 p-4">
+                          <div className="flex items-center justify-between mb-3">
+                            <div className="flex items-center gap-1.5">
+                              <span className="w-2.5 h-2.5 rounded-full bg-slate-300"></span>
+                              <span className="w-2.5 h-2.5 rounded-full bg-slate-300"></span>
+                              <span className="w-2.5 h-2.5 rounded-full bg-slate-300"></span>
+                            </div>
+                            <span className="text-[11px] font-mono font-semibold text-mint bg-emerald-50 border border-emerald-200/70 px-2.5 py-0.5 rounded-full">
+                              {project.metricBadge}
+                            </span>
+                          </div>
+                          <div className="rounded-xl bg-white border border-slate-200/80 p-3 space-y-2">
+                            <div className="flex items-center justify-between">
+                              <div className="h-2.5 w-24 rounded bg-slate-200"></div>
+                              <div className="h-2.5 w-12 rounded bg-blue-100"></div>
+                            </div>
+                            <div className="grid grid-cols-3 gap-2">
+                              <div className="h-11 rounded-lg bg-slate-50 border border-slate-100"></div>
+                              <div className="h-11 rounded-lg bg-slate-50 border border-slate-100"></div>
+                              <div className="h-11 rounded-lg bg-blue-50/60 border border-blue-100"></div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="p-6">
+                          <span className="text-[11px] font-mono font-semibold text-brand">{project.badge}</span>
+                          <h3 className="text-lg font-bold text-navy mt-1.5">{project.title}</h3>
+                          <p className="text-sm text-slate-600 mt-2.5 leading-relaxed">{project.summary}</p>
+                        </div>
+                      </div>
+
+                      <div className="px-6 pb-6 pt-2">
+                        <div className="flex flex-wrap gap-1.5 mb-5">
+                          {project.tags.map((tag) => (
+                            <span key={tag} className="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-600">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setSelectedProject(project)}
+                          className="w-full py-2.5 rounded-xl bg-slate-50 hover:bg-brand hover:text-white border border-slate-200 hover:border-brand text-xs font-semibold text-navy transition"
+                        >
+                          Inspect Technical Architecture →
+                        </button>
+                      </div>
+                    </article>
+                  </RevealBlock>
+                ))}
+              </div>
+            </section>
+
+            {/* Interactive Australian Storefront Spotlight */}
+            <section id="stores" className="bg-white border-b border-slate-200/80 py-20">
+              <div className="max-w-6xl mx-auto px-5">
+                <RevealBlock className="mb-10">
+                  <span className="text-xs font-mono font-semibold uppercase tracking-wider text-mint">Live Production Work</span>
+                  <h2 className="text-3xl font-extrabold text-navy mt-1.5">Australian Retail Storefronts</h2>
+                  <p className="text-sm text-slate-600 mt-2 max-w-xl">
+                    Select a live deployment below to inspect the storefront focus and open the live Australian e-commerce site.
+                  </p>
+                </RevealBlock>
+
+                <div className="grid lg:grid-cols-12 gap-8 items-stretch">
+                  {/* Left Selector List */}
+                  <div className="lg:col-span-5 space-y-3">
+                    {LIVE_STORES.map((store, idx) => {
+                      const isActive = idx === activeStoreIdx;
+                      return (
+                        <button
+                          key={store.domain}
+                          type="button"
+                          onClick={() => setActiveStoreIdx(idx)}
+                          className={`w-full text-left p-5 rounded-2xl border transition-all ${
+                            isActive
+                              ? 'bg-blue-50/60 border-brand shadow-sm'
+                              : 'bg-slate-50/70 border-slate-200/80 hover:bg-white hover:border-slate-300'
+                          }`}
+                        >
+                          <div className="flex items-center justify-between">
+                            <span className="font-bold text-base text-navy">{store.name}</span>
+                            <span className="text-[11px] font-mono text-mint font-semibold">● Live AU</span>
+                          </div>
+                          <p className="text-xs font-mono text-slate-500 mt-1">{store.domain}</p>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Right Active Browser Window Preview */}
+                  <div className="lg:col-span-7 bg-slate-50 rounded-2xl border border-slate-200/90 shadow-soft overflow-hidden flex flex-col justify-between">
+                    <div>
+                      {/* Browser Chrome */}
+                      <div className="bg-white border-b border-slate-200/80 px-4 py-3 flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-1.5">
+                          <span className="w-2.5 h-2.5 rounded-full bg-rose-400"></span>
+                          <span className="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+                          <span className="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                        </div>
+                        <div className="flex-1 max-w-sm bg-slate-100 rounded-lg px-3 py-1 text-[11px] font-mono text-slate-600 truncate text-center">
+                          https://{activeStore.domain}
+                        </div>
+                        <a
+                          href={activeStore.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs font-semibold text-brand hover:underline shrink-0"
+                        >
+                          Open ↗
+                        </a>
+                      </div>
+
+                      <div className="p-6 sm:p-8">
+                        <span className="text-xs font-mono font-semibold text-brand">{activeStore.sector}</span>
+                        <h3 className="text-2xl font-extrabold text-navy mt-1">{activeStore.name}</h3>
+                        <p className="text-sm text-slate-600 mt-3 leading-relaxed">{activeStore.summary}</p>
+
+                        <div className="mt-6 grid sm:grid-cols-3 gap-3">
+                          {activeStore.focus.map((item) => (
+                            <div key={item} className="bg-white rounded-xl border border-slate-200/80 p-3.5 text-xs font-medium text-navy">
+                              <span className="text-mint font-bold block mb-1">✓ Engineered</span>
+                              {item}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="px-6 sm:px-8 py-4 bg-white border-t border-slate-200/80 flex items-center justify-between">
+                      <span className="text-xs font-mono text-slate-500">Production Retail Storefront</span>
+                      <a
+                        href={activeStore.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-4 py-2 rounded-xl bg-navy text-white text-xs font-semibold hover:bg-brand transition"
+                      >
+                        Visit Live Store ↗
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Experience & Education */}
+            <section id="experience" className="max-w-6xl mx-auto px-5 py-20 border-b border-slate-200/80">
+              <div className="grid lg:grid-cols-12 gap-10">
+                <RevealBlock className="lg:col-span-4">
+                  <span className="text-xs font-mono font-semibold uppercase tracking-wider text-brand">Career Track Record</span>
+                  <h2 className="text-3xl font-extrabold text-navy mt-1.5">3+ Years Shipping Production Systems</h2>
+                  <p className="text-sm text-slate-600 mt-4 leading-relaxed">
+                    Hands-on agency and software team delivery—translating complex Figma design systems into sub-2s storefronts and modular WordPress architectures.
+                  </p>
+
+                  {/* Education Card */}
+                  <div className="mt-8 bg-white rounded-2xl border border-slate-200/90 p-6 shadow-soft">
+                    <span className="text-[11px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-blue-50 text-brand">
+                      Education
+                    </span>
+                    <h3 className="text-base font-bold text-navy mt-3">Bachelor of Computer Applications (BCA)</h3>
+                    <p className="text-xs text-slate-500 mt-1">Gulzar Group of Institutes, Khanna, Punjab</p>
+                    <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+                      <span className="text-slate-500">2020 – 2023</span>
+                      <span className="text-mint font-bold">CGPA: 7.92</span>
+                    </div>
+                  </div>
+                </RevealBlock>
+
+                <div className="lg:col-span-8 space-y-6">
+                  {EXPERIENCE_LIST.map((job, idx) => (
+                    <RevealBlock key={job.company} delay={idx * 90}>
+                      <div className="bg-white rounded-2xl border border-slate-200/90 p-6 sm:p-7 shadow-soft">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-100">
+                          <div>
+                            <h3 className="text-lg font-bold text-navy">{job.role}</h3>
+                            <p className="text-sm font-semibold text-brand">{job.company} • {job.location}</p>
+                          </div>
+                          <span
+                            className={`text-xs font-mono font-semibold px-3 py-1 rounded-full w-fit ${
+                              job.current
+                                ? 'bg-emerald-50 text-mint border border-emerald-200/70'
+                                : 'bg-slate-100 text-slate-600'
+                            }`}
+                          >
+                            {job.period}
+                          </span>
+                        </div>
+                        <ul className="mt-4 space-y-3 text-sm text-slate-600 leading-relaxed">
+                          {job.bullets.map((b) => (
+                            <li key={b} className="flex items-start gap-2.5">
+                              <span className="text-brand font-bold mt-0.5">→</span>
+                              <span>{b}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </RevealBlock>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* Technical Stack */}
+            <section id="stack" className="max-w-6xl mx-auto px-5 py-20 border-b border-slate-200/80">
+              <RevealBlock className="mb-10">
+                <span className="text-xs font-mono font-semibold uppercase tracking-wider text-brand">Capabilities</span>
+                <h2 className="text-3xl font-extrabold text-navy mt-1.5">Technical Stack &amp; Tooling</h2>
+              </RevealBlock>
+
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                {TECH_STACK.map((group, idx) => (
+                  <RevealBlock key={group.title} delay={idx * 70}>
+                    <div className="h-full bg-white rounded-2xl border border-slate-200/90 p-6 shadow-soft">
+                      <span className={`inline-block text-[11px] font-mono font-semibold px-2.5 py-1 rounded-lg border mb-4 ${group.accent}`}>
+                        0{idx + 1}
+                      </span>
+                      <h3 className="font-bold text-navy text-base mb-3">{group.title}</h3>
+                      <div className="flex flex-wrap gap-1.5">
+                        {group.items.map((item) => (
+                          <span key={item} className="text-xs font-mono px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200/70 text-slate-700">
+                            {item}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </RevealBlock>
+                ))}
+              </div>
+            </section>
+
+            {/* Finaze-Style Interactive FAQ Accordion */}
+            <section id="faq" className="max-w-4xl mx-auto px-5 py-20 border-b border-slate-200/80">
+              <RevealBlock className="text-center mb-10">
+                <span className="text-xs font-mono font-semibold uppercase tracking-wider text-brand">Working Together</span>
+                <h2 className="text-3xl font-extrabold text-navy mt-1.5">Common Recruiter &amp; Client Questions</h2>
+              </RevealBlock>
+
+              <div className="space-y-3">
+                {FAQS.map((item, idx) => {
+                  const isOpen = openFaqIdx === idx;
+                  return (
+                    <div key={item.q} className="bg-white rounded-2xl border border-slate-200/90 shadow-soft overflow-hidden">
+                      <button
+                        type="button"
+                        onClick={() => setOpenFaqIdx(isOpen ? -1 : idx)}
+                        className="w-full px-6 py-5 text-left flex items-center justify-between gap-4"
+                      >
+                        <span className="font-bold text-sm sm:text-base text-navy">{item.q}</span>
+                        <span className={`w-7 h-7 rounded-full bg-slate-100 text-navy flex items-center justify-center font-mono text-sm shrink-0 transition-transform ${isOpen ? 'rotate-45 bg-brand text-white' : ''}`}>
+                          +
+                        </span>
+                      </button>
+                      {isOpen && (
+                        <div className="px-6 pb-5 text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                          {item.a}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+
+            {/* Contact Section */}
+            <section id="contact" className="max-w-6xl mx-auto px-5 py-20">
+              <div className="bg-white rounded-3xl border border-slate-200/90 shadow-soft p-8 sm:p-12 grid lg:grid-cols-12 gap-10 items-start">
+                <div className="lg:col-span-6">
+                  <span className="text-xs font-mono font-semibold uppercase tracking-wider text-brand">Let's Connect</span>
+                  <h2 className="text-3xl sm:text-4xl font-extrabold text-navy mt-2 leading-tight">
+                    Ready to scale your storefront or engineering team.
+                  </h2>
+                  <p className="text-sm sm:text-base text-slate-600 mt-4 leading-relaxed">
+                    Reach out directly for full-time or remote software/web developer interviews (Australia, UK, New Zealand, EU, India) or bespoke Shopify &amp; WordPress projects.
+                  </p>
+
+                  <div className="mt-8 space-y-3.5 text-sm font-mono">
+                    <div className="flex items-center gap-3 text-slate-700">
+                      <span className="text-brand font-bold">Email:</span>
+                      <a href="mailto:gurpreet231201@gmail.com" className="hover:text-brand underline decoration-slate-300">
+                        gurpreet231201@gmail.com
+                      </a>
+                    </div>
+                    <div className="flex items-center gap-3 text-slate-700">
+                      <span className="text-brand font-bold">Phone:</span>
+                      <a href="tel:+917009202092" className="hover:text-brand underline decoration-slate-300">
+                        +91 7009202092
+                      </a>
+                    </div>
+                    <div className="flex items-center gap-3 text-slate-700">
+                      <span className="text-brand font-bold">LinkedIn:</span>
+                      <a href="https://www.linkedin.com/in/gurpreet-singh-0252201b6" target="_blank" rel="noopener noreferrer" className="hover:text-brand underline decoration-slate-300">
+                        /in/gurpreet-singh-0252201b6
+                      </a>
+                    </div>
+                    <div className="flex items-center gap-3 text-slate-500">
+                      <span className="text-brand font-bold">Location:</span>
+                      <span>Ludhiana, Punjab, India (IST / UTC+5:30)</span>
+                    </div>
+                  </div>
+                </div>
+
+                <form onSubmit={handleFormSubmit} className="lg:col-span-6 bg-slate-50 border border-slate-200/90 rounded-2xl p-6 space-y-4">
+                  <div>
+                    <label htmlFor="formName" className="block text-xs font-semibold text-navy mb-1.5">
+                      Your Name / Company
+                    </label>
+                    <input
+                      id="formName"
+                      type="text"
+                      required
+                      value={formName}
+                      onChange={(e) => setFormName(e.target.value)}
+                      placeholder="Sarah Jenkins — Melbourne Digital"
+                      className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-sm text-navy placeholder-slate-400 focus:outline-none focus:border-brand transition"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="formType" className="block text-xs font-semibold text-navy mb-1.5">
+                      Inquiry Type
+                    </label>
+                    <select
+                      id="formType"
+                      value={formType}
+                      onChange={(e) => setFormType(e.target.value)}
+                      className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-sm text-navy focus:outline-none focus:border-brand transition"
+                    >
+                      <option value="Full-Time / Remote Engineering Role">Full-Time / Remote Engineering Role</option>
+                      <option value="Shopify / WooCommerce Storefront Build">Shopify / WooCommerce Storefront Build</option>
+                      <option value="Core Web Vitals & Speed Optimization">Core Web Vitals &amp; Speed Optimization</option>
+                      <option value="Custom WordPress Plugin / API Integration">Custom WordPress Plugin / API Integration</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label htmlFor="formDetails" className="block text-xs font-semibold text-navy mb-1.5">
+                      Role Specs or Store URL
+                    </label>
+                    <textarea
+                      id="formDetails"
+                      rows="3"
+                      required
+                      value={formDetails}
+                      onChange={(e) => setFormDetails(e.target.value)}
+                      placeholder="Share role details, timezone overlap, or your storefront URL..."
+                      className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-sm text-navy placeholder-slate-400 focus:outline-none focus:border-brand transition"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full py-3.5 rounded-xl bg-brand text-white font-semibold text-sm hover:bg-brandDark transition shadow-md shadow-brand/20"
+                  >
+                    Compose Email Inquiry →
+                  </button>
+                </form>
+              </div>
+            </section>
+          </main>
+
+          <footer className="border-t border-slate-200/80 bg-white py-8 text-center text-xs font-mono text-slate-500">
+            © 2026 Gurpreet Singh • Built with React 18 &amp; Tailwind CSS
+          </footer>
+
+          {/* React Architecture Modal */}
+          {selectedProject && (
+            <div
+              onClick={(e) => {
+                if (e.target === e.currentTarget) setSelectedProject(null);
+              }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy/50 backdrop-blur-sm"
+            >
+              <div className="bg-white max-w-xl w-full rounded-2xl border border-slate-200 shadow-2xl p-6 sm:p-8 relative animate-fade-up">
+                <button
+                  type="button"
+                  onClick={() => setSelectedProject(null)}
+                  aria-label="Close modal"
+                  className="absolute top-5 right-5 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center font-mono text-sm transition"
+                >
+                  ✕
+                </button>
+                <span className="text-xs font-mono font-semibold text-brand uppercase tracking-wider">
+                  {selectedProject.badge}
+                </span>
+                <h3 className="text-xl sm:text-2xl font-extrabold text-navy mt-1">{selectedProject.title}</h3>
+                <p className="text-sm text-slate-600 mt-3 leading-relaxed">{selectedProject.summary}</p>
+
+                <div className="mt-5 pt-5 border-t border-slate-100">
+                  <p className="text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold mb-3">
+                    Technical Implementation Highlights
+                  </p>
+                  <ul className="space-y-2.5 text-sm text-slate-700">
+                    {selectedProject.highlights.map((item) => (
+                      <li key={item} className="flex items-start gap-2.5">
+                        <span className="text-mint font-bold mt-0.5">✓</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+                  <span className="text-xs font-mono font-bold text-mint">{selectedProject.outcome}</span>
+                  <a
+                    href="#contact"
+                    onClick={() => setSelectedProject(null)}
+                    className="text-xs font-semibold px-4 py-2.5 rounded-xl bg-brand text-white hover:bg-brandDark transition"
+                  >
+                    Discuss Similar Build
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
   </script>
-
 </body>
 </html>
