@@ -1,13 +1,325 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portfolio</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gurpreet Singh — E-Commerce & Full-Stack CMS Engineer</title>
+  <meta name="description" content="Shopify, WooCommerce, and WordPress Engineer specializing in high-converting e-commerce architecture, Core Web Vitals optimization, and AI-driven CRO." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            surface: '#0B0F19',
+            card: '#111827',
+            border: '#1F2937',
+            accent: '#10B981',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-surface text-slate-200 font-sans antialiased selection:bg-emerald-500/30 selection:text-emerald-200">
+
+  <!-- Top Navigation -->
+  <header class="sticky top-0 z-50 border-b border-border/80 bg-surface/90 backdrop-blur-md">
+    <div class="max-w-5xl mx-auto px-5 h-16 flex items-center justify-between">
+      <a href="#" class="font-mono text-sm font-medium tracking-tight text-white flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+        gurpreet.dev
+      </a>
+      <nav class="hidden sm:flex items-center gap-7 text-sm text-slate-400">
+        <a href="#work" class="hover:text-white transition">Case Studies</a>
+        <a href="#engineering" class="hover:text-white transition">R&D & Plugins</a>
+        <a href="#stack" class="hover:text-white transition">Capabilities</a>
+        <a href="#contact" class="hover:text-white transition">Contact</a>
+      </nav>
+      <a href="#contact" class="text-xs font-mono uppercase tracking-wider px-3.5 py-2 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20 transition">
+        Hire / Inquire
+      </a>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-5">
+
+    <!-- Hero Section -->
+    <section class="py-16 sm:py-24 border-b border-border">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-card border border-border text-xs font-mono text-slate-300 mb-6">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        Available for International Roles (AU / UK / NZ / EU) & Select D2C Builds
+      </div>
+
+      <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-white leading-[1.15] max-w-3xl">
+        E-Commerce & Full-Stack CMS Engineer building fast, conversion-engineered storefronts.
+      </h1>
+
+      <p class="mt-6 text-base sm:text-lg text-slate-400 max-w-2xl leading-relaxed">
+        I'm <strong class="text-slate-200 font-medium">Gurpreet Singh</strong>—a WordPress, WooCommerce, and Shopify developer with 2.5+ years of production experience shipping international e-commerce stores, custom PHP/Liquid architectures, and AI-assisted CRO systems.
+      </p>
+
+      <!-- Dual Action CTAs (Clients + Recruiters) -->
+      <div class="mt-8 flex flex-wrap items-center gap-4">
+        <a href="#work" class="px-5 py-3 rounded-lg bg-emerald-500 text-slate-950 font-semibold text-sm hover:bg-emerald-400 transition">
+          Explore Production Stores
+        </a>
+        <!-- TODO: Replace href with your hosted Google Drive / GitHub PDF Resume URL -->
+        <a href="#contact" class="px-5 py-3 rounded-lg bg-card border border-border text-slate-200 font-medium text-sm hover:border-slate-600 transition">
+          Request CV & Architecture Notes
+        </a>
+        <a href="https://github.com/Gurpreetsi2312" target="_blank" rel="noopener noreferrer" class="px-4 py-3 text-sm font-mono text-slate-400 hover:text-white transition flex items-center gap-2">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+      </div>
+
+      <!-- Proof Strip -->
+      <div class="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-6 pt-8 border-t border-border/60">
+        <div>
+          <p class="text-2xl font-bold text-white">2.5+ Yrs</p>
+          <p class="text-xs text-slate-400 mt-1">Production CMS & E-Commerce</p>
+        </div>
+        <div>
+          <p class="text-2xl font-bold text-white">AU / Global</p>
+          <p class="text-xs text-slate-400 mt-1">Cross-Border Store Delivery</p>
+        </div>
+        <div>
+          <p class="text-2xl font-bold text-white">Core Vitals</p>
+          <p class="text-xs text-slate-400 mt-1">Zero-Bloat Theme Engineering</p>
+        </div>
+        <div>
+          <p class="text-2xl font-bold text-white">AI + CRO</p>
+          <p class="text-xs text-slate-400 mt-1">Programmatic Pages & GEO</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Selected Production Case Studies -->
+    <section id="work" class="py-16 border-b border-border">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+        <div>
+          <p class="text-xs font-mono uppercase tracking-wider text-emerald-400">Production Proof</p>
+          <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Selected E-Commerce Builds</h2>
+        </div>
+        <p class="text-sm text-slate-400 max-w-md">
+          Live Australian retail storefronts engineered for mobile conversion, clean catalog navigation, and maintainable theme code.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Project 1 -->
+        <article class="rounded-xl bg-card border border-border p-6 flex flex-col justify-between hover:border-slate-700 transition">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="text-xs font-mono px-2.5 py-1 rounded bg-surface border border-border text-emerald-400">E-Commerce • AU</span>
+              <a href="https://attitudesplash.com.au" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-slate-400 hover:text-white flex items-center gap-1">
+                Live Store ↗
+              </a>
+            </div>
+            <h3 class="text-lg font-semibold text-white">Attitude Splash</h3>
+            <p class="text-sm text-slate-400 mt-3 leading-relaxed">
+              Full storefront build and UX optimization for an Australian lifestyle & swimwear brand. Engineered responsive collection grids, streamlined product variant selection, and mobile-first cart flows.
+            </p>
+            <ul class="mt-4 space-y-2 text-xs text-slate-300 border-t border-border/70 pt-4">
+              <li><strong class="text-slate-200">Focus:</strong> Mobile UX, collection filtering & checkout friction reduction</li>
+              <li><strong class="text-slate-200">Impact:</strong> Faster mobile browsing and cleaner merchandising hierarchy</li>
+            </ul>
+          </div>
+          <div class="mt-6 flex flex-wrap gap-1.5">
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-surface text-slate-400">Custom Theme</span>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-surface text-slate-400">Liquid / PHP</span>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-surface text-slate-400">CRO UX</span>
+          </div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="rounded-xl bg-card border border-border p-6 flex flex-col justify-between hover:border-slate-700 transition">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="text-xs font-mono px-2.5 py-1 rounded bg-surface border border-border text-emerald-400">Fashion Retail • AU</span>
+              <a href="https://modestoshoes.com.au" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-slate-400 hover:text-white flex items-center gap-1">
+                Live Store ↗
+              </a>
+            </div>
+            <h3 class="text-lg font-semibold text-white">Modesto Shoes</h3>
+            <p class="text-sm text-slate-400 mt-3 leading-relaxed">
+              End-to-end e-commerce architecture for a multi-category footwear retailer. Built intuitive size/style variant selectors, high-resolution asset lazy-loading, and structured product templates.
+            </p>
+            <ul class="mt-4 space-y-2 text-xs text-slate-300 border-t border-border/70 pt-4">
+              <li><strong class="text-slate-200">Focus:</strong> Variant UX, image pipeline speed & responsive PDP layout</li>
+              <li><strong class="text-slate-200">Impact:</strong> Reduced PDP visual clutter and improved size-selection clarity</li>
+            </ul>
+          </div>
+          <div class="mt-6 flex flex-wrap gap-1.5">
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-surface text-slate-400">Catalog UX</span>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-surface text-slate-400">Core Web Vitals</span>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-surface text-slate-400">JS / CSS</span>
+          </div>
+        </article>
+
+        <!-- Project 3 -->
+        <article class="rounded-xl bg-card border border-border p-6 flex flex-col justify-between hover:border-slate-700 transition">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="text-xs font-mono px-2.5 py-1 rounded bg-surface border border-border text-emerald-400">Tech Retail • AU</span>
+              <a href="https://shop.mobile-experts.com.au" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-slate-400 hover:text-white flex items-center gap-1">
+                Live Store ↗
+              </a>
+            </div>
+            <h3 class="text-lg font-semibold text-white">Mobile Experts</h3>
+            <p class="text-sm text-slate-400 mt-3 leading-relaxed">
+              High-SKU consumer electronics and accessories storefront engineered for rapid device-compatibility discovery, clean taxonomy architecture, and technical SEO schema markup.
+            </p>
+            <ul class="mt-4 space-y-2 text-xs text-slate-300 border-t border-border/70 pt-4">
+              <li><strong class="text-slate-200">Focus:</strong> High-SKU taxonomy, search speed & structured schema</li>
+              <li><strong class="text-slate-200">Impact:</strong> Scalable multi-device navigation with minimal plugin overhead</li>
+            </ul>
+          </div>
+          <div class="mt-6 flex flex-wrap gap-1.5">
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-surface text-slate-400">High-SKU</span>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-surface text-slate-400">Technical SEO</span>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-surface text-slate-400">Full-Stack CMS</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Engineering R&D / Differentiation -->
+    <section id="engineering" class="py-16 border-b border-border">
+      <p class="text-xs font-mono uppercase tracking-wider text-emerald-400">Beyond Theme Setup</p>
+      <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1 mb-8">Custom Plugin & AI Search Architecture</h2>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="rounded-xl bg-card border border-border p-6">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-mono text-emerald-400">WordPress / WooCommerce Plugin</span>
+            <span class="text-xs font-mono text-slate-500">PHP 8 • Custom DB Tables</span>
+          </div>
+          <h3 class="text-lg font-semibold text-white">AI Search & <code>llms.txt</code> Engine for WooCommerce</h3>
+          <p class="text-sm text-slate-400 mt-2 leading-relaxed">
+            Engineered a custom plugin that compiles WooCommerce product catalogs into clean, token-efficient Markdown endpoints (<code>/llms.txt</code>) with custom SQL indexing and AI crawler telemetry—making storefronts natively readable by ChatGPT, Perplexity, and Claude.
+          </p>
+        </div>
+
+        <div class="rounded-xl bg-card border border-border p-6">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-mono text-emerald-400">Conversion Architecture</span>
+            <span class="text-xs font-mono text-slate-500">Shopify • Programmatic CRO</span>
+          </div>
+          <h3 class="text-lg font-semibold text-white">Programmatic Landing Page & CRO Systems</h3>
+          <p class="text-sm text-slate-400 mt-2 leading-relaxed">
+            Designed modular section schemas and dynamic landing page workflows that align paid ad intent with tailored social proof, bundle logic, and sub-second First Contentful Paint to lift ROAS without third-party page-builder bloat.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technical Capabilities -->
+    <section id="stack" class="py-16 border-b border-border">
+      <p class="text-xs font-mono uppercase tracking-wider text-emerald-400">Technical Stack</p>
+      <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1 mb-8">Core Engineering Capabilities</h2>
+
+      <div class="grid sm:grid-cols-3 gap-6">
+        <div class="rounded-xl bg-card/60 border border-border p-5">
+          <h3 class="font-semibold text-white text-sm mb-3">CMS & E-Commerce Platforms</h3>
+          <ul class="space-y-2 text-sm text-slate-400">
+            <li>• WordPress Custom Themes & Plugins</li>
+            <li>• WooCommerce Hooks, Checkout & APIs</li>
+            <li>• Shopify Liquid, Sections & Storefront UX</li>
+            <li>• Headless / Hybrid REST & GraphQL Integrations</li>
+          </ul>
+        </div>
+
+        <div class="rounded-xl bg-card/60 border border-border p-5">
+          <h3 class="font-semibold text-white text-sm mb-3">Frontend & Performance</h3>
+          <ul class="space-y-2 text-sm text-slate-400">
+            <li>• Semantic HTML5, Modern CSS / Tailwind</li>
+            <li>• Vanilla JavaScript (ES6+) & Alpine/React</li>
+            <li>• Core Web Vitals (LCP, INP, CLS) Audits</li>
+            <li>• Asset Optimization & Critical CSS Delivery</li>
+          </ul>
+        </div>
+
+        <div class="rounded-xl bg-card/60 border border-border p-5">
+          <h3 class="font-semibold text-white text-sm mb-3">Backend, SEO & Workflow</h3>
+          <ul class="space-y-2 text-sm text-slate-400">
+            <li>• PHP 8+, MySQL Schema & Query Tuning</li>
+            <li>• Technical SEO, JSON-LD & <code>llms.txt</code></li>
+            <li>• Git Version Control & Staging CI/CD</li>
+            <li>• GA4, GTM & Conversion Funnel Tracking</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16">
+      <div class="grid md:grid-cols-2 gap-10 items-start">
+        <div>
+          <p class="text-xs font-mono uppercase tracking-wider text-emerald-400">Next Step</p>
+          <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Let's talk architecture or roles.</h2>
+          <p class="text-sm text-slate-400 mt-4 leading-relaxed">
+            Whether you're a hiring manager scaling an engineering/e-commerce team or a D2C brand needing a faster, higher-converting storefront, send a quick note below.
+          </p>
+
+          <div class="mt-6 space-y-3 text-sm font-mono text-slate-300">
+            <!-- TODO: Replace with your real email and LinkedIn URL -->
+            <p>Email: <a href="mailto:gurpreet@example.com" class="text-emerald-400 hover:underline">gurpreet@example.com</a></p>
+            <p>GitHub: <a href="https://github.com/Gurpreetsi2312" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:underline">github.com/Gurpreetsi2312</a></p>
+            <p>Timezone: IST (UTC+5:30) — Overlaps AU/NZ & UK/EU</p>
+          </div>
+        </div>
+
+        <!-- TODO: Replace action URL with your Formspree endpoint (e.g., https://formspree.io/f/your-id) -->
+        <form action="https://formspree.io/f/placeholder" method="POST" class="rounded-xl bg-card border border-border p-6 space-y-4">
+          <div>
+            <label for="name" class="block text-xs font-mono text-slate-400 mb-1.5">Name / Company</label>
+            <input id="name" name="name" type="text" required placeholder="Jane Doe — Acme Commerce"
+              class="w-full px-3.5 py-2.5 rounded-lg bg-surface border border-border text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500" />
+          </div>
+
+          <div>
+            <label for="email" class="block text-xs font-mono text-slate-400 mb-1.5">Work Email</label>
+            <input id="email" name="email" type="email" required placeholder="jane@company.com"
+              class="w-full px-3.5 py-2.5 rounded-lg bg-surface border border-border text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500" />
+          </div>
+
+          <div>
+            <label for="inquiry_type" class="block text-xs font-mono text-slate-400 mb-1.5">Inquiry Type</label>
+            <select id="inquiry_type" name="inquiry_type"
+              class="w-full px-3.5 py-2.5 rounded-lg bg-surface border border-border text-sm text-white focus:outline-none focus:border-emerald-500">
+              <option value="Full-Time / Contract Role">Full-Time / Contract Engineering Role</option>
+              <option value="Shopify / WooCommerce Build">Shopify / WooCommerce Store Build or Audit</option>
+              <option value="Custom Plugin / CRO">Custom Plugin or CRO Architecture</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="message" class="block text-xs font-mono text-slate-400 mb-1.5">Project or Role Details</label>
+            <textarea id="message" name="message" rows="3" required placeholder="Share a link to your store or role specs..."
+              class="w-full px-3.5 py-2.5 rounded-lg bg-surface border border-border text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"></textarea>
+          </div>
+
+          <button type="submit" class="w-full py-3 rounded-lg bg-emerald-500 text-slate-950 font-semibold text-sm hover:bg-emerald-400 transition">
+            Send Message
+          </button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-border py-8 text-center text-xs font-mono text-slate-500">
+    © 2026 Gurpreet Singh • Built for Speed & Clarity
+  </footer>
+
+</body>
 </html>
