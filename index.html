@@ -328,6 +328,7 @@
       const [inquiryDetails, setInquiryDetails] = useState('');
 
       useEffect(() => {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
         if (!window.gsap || !window.ScrollTrigger) return;
 
         const ctx = gsap.context(() => {
