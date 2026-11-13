@@ -8,19 +8,22 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            serif: ['"Instrument Serif"', 'Georgia', 'serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
           },
           colors: {
-            obsidian: '#070A12',
-            panel: '#0D121F',
-            elevated: '#131A2C',
+            cream: '#F7F4ED',
+            sand: '#EFECE3',
+            ink: '#141519',
+            emeraldDeep: '#059669',
+            terracotta: '#D95D39',
           }
         }
       }
@@ -28,60 +31,121 @@
   </script>
   <style>
     body {
-      background-color: #070A12;
+      background-color: #F7F4ED;
+      color: #141519;
       background-image:
-        radial-gradient(ellipse 80% 50% at 50% -15%, rgba(16, 185, 129, 0.14), transparent),
-        radial-gradient(ellipse 50% 40% at 90% 10%, rgba(56, 189, 248, 0.08), transparent);
+        radial-gradient(circle at 12% 8%, rgba(5, 150, 105, 0.08), transparent 38%),
+        radial-gradient(circle at 88% 14%, rgba(217, 93, 57, 0.09), transparent 40%);
     }
-    .grid-pattern {
-      background-size: 36px 36px;
+
+    .editorial-grid {
+      background-size: 44px 44px;
       background-image:
-        linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+        linear-gradient(to right, rgba(20, 21, 25, 0.045) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(20, 21, 25, 0.045) 1px, transparent 1px);
     }
-    .glass-card {
-      background: linear-gradient(180deg, rgba(19, 26, 44, 0.72) 0%, rgba(13, 18, 31, 0.88) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 20px 40px -24px rgba(0, 0, 0, 0.7);
+
+    /* Tactile Editorial Card */
+    .tactile-card {
+      background: #FFFFFF;
+      border: 1.5px solid #141519;
+      box-shadow: 5px 5px 0px #141519;
+      transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.32s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    .glass-card:hover {
-      border-color: rgba(16, 185, 129, 0.35);
+    .tactile-card:hover {
+      transform: translate(-3px, -4px);
+      box-shadow: 9px 9px 0px #141519;
+    }
+
+    /* Kinetic Marquee */
+    @keyframes marqueeLeft {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
+    }
+    .animate-marquee {
+      display: flex;
+      width: max-content;
+      animation: marqueeLeft 32s linear infinite;
+    }
+    .marquee-wrapper:hover .animate-marquee {
+      animation-play-state: paused;
+    }
+
+    /* Hero Entrance Animations */
+    @keyframes fadeSlideUp {
+      0% { opacity: 0; transform: translateY(24px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .hero-enter {
+      opacity: 0;
+      animation: fadeSlideUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .delay-1 { animation-delay: 0.08s; }
+    .delay-2 { animation-delay: 0.18s; }
+    .delay-3 { animation-delay: 0.28s; }
+    .delay-4 { animation-delay: 0.38s; }
+
+    /* Scroll Reveal Choreography */
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Floating Ambient Badge */
+    @keyframes gentleFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+    }
+    .float-slow {
+      animation: gentleFloat 4.5s ease-in-out infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .animate-marquee, .hero-enter, .float-slow { animation: none !important; opacity: 1 !important; transform: none !important; }
+      .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
     }
   </style>
 </head>
-<body class="text-slate-200 font-sans antialiased selection:bg-emerald-500/30 selection:text-emerald-200">
+<body class="font-sans antialiased selection:bg-emeraldDeep selection:text-white overflow-x-hidden">
 
-  <!-- Sticky Frosted Navbar -->
-  <header class="sticky top-0 z-40 border-b border-white/[0.07] bg-obsidian/80 backdrop-blur-xl">
+  <!-- Top Reading Progress Indicator -->
+  <div id="scrollProgress" class="fixed top-0 left-0 h-[3px] bg-gradient-to-r from-emeraldDeep via-teal-500 to-terracotta z-50 w-0 transition-[width] duration-75"></div>
+
+  <!-- Sticky Daylight Header -->
+  <header class="sticky top-0 z-40 bg-cream/85 backdrop-blur-xl border-b border-ink/15">
     <div class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
       <a href="#" class="flex items-center gap-2.5 group">
-        <span class="w-8 h-8 rounded-lg bg-emerald-500/15 border border-emerald-500/40 flex items-center justify-center font-mono text-xs font-semibold text-emerald-400 group-hover:bg-emerald-500 group-hover:text-obsidian transition">
+        <span class="w-8 h-8 rounded-full bg-ink text-cream flex items-center justify-center font-mono text-xs font-semibold group-hover:bg-emeraldDeep transition-colors duration-300">
           GS
         </span>
-        <span class="font-mono text-sm font-medium text-white tracking-tight">gurpreet.dev</span>
+        <span class="font-mono text-sm font-semibold tracking-tight text-ink">gurpreet.dev</span>
       </a>
 
-      <!-- Desktop Nav -->
-      <nav class="hidden md:flex items-center gap-8 text-sm text-slate-400">
-        <a href="#work" class="hover:text-white transition">Case Studies</a>
-        <a href="#stores" class="hover:text-white transition">Live Stores</a>
-        <a href="#experience" class="hover:text-white transition">Experience</a>
-        <a href="#stack" class="hover:text-white transition">Stack</a>
-        <a href="#contact" class="hover:text-white transition">Contact</a>
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-ink/75">
+        <a href="#work" class="hover:text-ink transition relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-emeraldDeep hover:after:w-full after:transition-all">Case Studies</a>
+        <a href="#stores" class="hover:text-ink transition relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-emeraldDeep hover:after:w-full after:transition-all">Live AU Stores</a>
+        <a href="#experience" class="hover:text-ink transition relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-emeraldDeep hover:after:w-full after:transition-all">Experience</a>
+        <a href="#stack" class="hover:text-ink transition relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-emeraldDeep hover:after:w-full after:transition-all">Stack</a>
+        <a href="#contact" class="hover:text-ink transition relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-emeraldDeep hover:after:w-full after:transition-all">Contact</a>
       </nav>
 
-      <!-- Header Actions -->
+      <!-- Header Buttons -->
       <div class="flex items-center gap-2.5">
-        <a href="./Gurpreet-Singh-Resume.pdf" download class="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono px-3.5 py-2 rounded-lg border border-white/10 bg-white/[0.03] text-slate-200 hover:border-white/25 hover:bg-white/[0.06] transition">
+        <a href="./Gurpreet-Singh-Resume.pdf" download class="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono font-medium px-3.5 py-2 rounded-full border border-ink/25 bg-white text-ink hover:border-ink hover:bg-sand transition">
           <span>Resume.pdf</span>
-          <span class="text-emerald-400">↓</span>
+          <span class="text-emeraldDeep font-bold">↓</span>
         </a>
-        <a href="#contact" class="text-xs font-semibold px-4 py-2 rounded-lg bg-emerald-500 text-obsidian hover:bg-emerald-400 transition shadow-lg shadow-emerald-500/20">
+        <a href="#contact" class="text-xs font-semibold px-4 py-2.5 rounded-full bg-ink text-cream hover:bg-emeraldDeep transition-colors duration-300">
           Hire / Inquire
         </a>
-        <!-- Mobile Menu Button -->
-        <button id="mobileMenuBtn" aria-label="Toggle Menu" class="md:hidden p-2 rounded-lg border border-white/10 text-slate-300 hover:text-white">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+        <button id="mobileMenuBtn" aria-label="Toggle Menu" class="md:hidden p-2 rounded-lg border border-ink/20 bg-white text-ink">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
           </svg>
         </button>
@@ -89,124 +153,125 @@
     </div>
 
     <!-- Mobile Dropdown -->
-    <div id="mobileMenu" class="hidden md:hidden border-t border-white/[0.07] bg-panel px-5 py-4 space-y-3 text-sm">
-      <a href="#work" class="block text-slate-300 hover:text-emerald-400">Case Studies</a>
-      <a href="#stores" class="block text-slate-300 hover:text-emerald-400">Live AU Stores</a>
-      <a href="#experience" class="block text-slate-300 hover:text-emerald-400">Experience</a>
-      <a href="#stack" class="block text-slate-300 hover:text-emerald-400">Tech Stack</a>
-      <a href="./Gurpreet-Singh-Resume.pdf" download class="block font-mono text-xs text-emerald-400 pt-2 border-t border-white/10">Download Resume (PDF) ↓</a>
+    <div id="mobileMenu" class="hidden md:hidden border-t border-ink/15 bg-cream px-5 py-4 space-y-3 text-sm font-medium">
+      <a href="#work" class="block text-ink/80 hover:text-emeraldDeep">Case Studies</a>
+      <a href="#stores" class="block text-ink/80 hover:text-emeraldDeep">Live AU Stores</a>
+      <a href="#experience" class="block text-ink/80 hover:text-emeraldDeep">Experience</a>
+      <a href="#stack" class="block text-ink/80 hover:text-emeraldDeep">Tech Stack</a>
+      <a href="./Gurpreet-Singh-Resume.pdf" download class="block font-mono text-xs text-emeraldDeep pt-2 border-t border-ink/10">Download Resume (PDF) ↓</a>
     </div>
   </header>
 
   <main>
 
-    <!-- Hero + Bento Telemetry Section -->
-    <section class="relative grid-pattern border-b border-white/[0.07]">
+    <!-- Daylight Editorial Hero Section -->
+    <section class="editorial-grid border-b border-ink/15">
       <div class="max-w-6xl mx-auto px-5 py-16 sm:py-24">
-        <div class="grid lg:grid-cols-12 gap-10 items-center">
+        <div class="grid lg:grid-cols-12 gap-12 items-center">
 
-          <!-- Left Column: Positioning -->
+          <!-- Left Editorial Column -->
           <div class="lg:col-span-7">
-            <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-xs font-mono text-emerald-300 mb-6">
-              <span class="relative flex h-2 w-2">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+            <div class="hero-enter inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white border border-ink/20 text-xs font-mono text-ink shadow-sm mb-6">
+              <span class="relative flex h-2.5 w-2.5">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emeraldDeep opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emeraldDeep"></span>
               </span>
-              Open to International Roles (AU • UK • NZ • EU • Remote) & D2C Builds
+              Available for International Roles (AU • UK • NZ • EU • Remote) & D2C Builds
             </div>
 
-            <h1 class="text-4xl sm:text-5xl lg:text-[3.35rem] font-extrabold tracking-tight text-white leading-[1.1]">
-              Engineering <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-sky-400">sub-2s storefronts</span> & scalable CMS architecture.
+            <h1 class="hero-enter delay-1 text-4xl sm:text-5xl lg:text-[3.55rem] font-extrabold tracking-tight text-ink leading-[1.08]">
+              Engineering <span class="font-serif italic font-normal text-emeraldDeep text-[1.12em]">sub-2s storefronts</span> &amp; scalable CMS systems.
             </h1>
 
-            <p class="mt-6 text-base sm:text-lg text-slate-400 leading-relaxed max-w-2xl">
-              I'm <strong class="text-white font-semibold">Gurpreet Singh</strong>—a Full-Stack CMS & E-Commerce Developer with <strong class="text-slate-200 font-medium">3+ years of experience</strong> building bespoke Shopify (Liquid) stores, custom WordPress themes/plugins, and REST API pipelines for international retail brands.
+            <p class="hero-enter delay-2 mt-6 text-base sm:text-lg text-ink/75 leading-relaxed max-w-2xl">
+              I'm <strong class="text-ink font-bold">Gurpreet Singh</strong>—a Full-Stack CMS &amp; E-Commerce Developer with <strong class="text-ink font-semibold">3+ years of experience</strong> building bespoke Shopify (Liquid) storefronts, custom WordPress themes/plugins, and REST API pipelines for international brands.
             </p>
 
-            <!-- Primary CTAs -->
-            <div class="mt-8 flex flex-wrap items-center gap-3.5">
-              <a href="#work" class="px-6 py-3.5 rounded-xl bg-emerald-500 text-obsidian font-semibold text-sm hover:bg-emerald-400 transition shadow-lg shadow-emerald-500/20">
-                Explore Case Studies
+            <!-- Primary Pill CTAs -->
+            <div class="hero-enter delay-3 mt-8 flex flex-wrap items-center gap-3.5">
+              <a href="#work" class="group px-6 py-3.5 rounded-full bg-ink text-cream font-semibold text-sm hover:bg-emeraldDeep transition-all duration-300 flex items-center gap-2">
+                <span>Explore Case Studies</span>
+                <span class="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
               </a>
-              <a href="./Gurpreet-Singh-Resume.pdf" download class="px-5 py-3.5 rounded-xl bg-white/[0.04] border border-white/10 text-white font-medium text-sm hover:bg-white/[0.08] hover:border-white/20 transition">
+              <a href="./Gurpreet-Singh-Resume.pdf" download class="px-5 py-3.5 rounded-full bg-white border-[1.5px] border-ink text-ink font-semibold text-sm hover:bg-sand transition">
                 Download CV (PDF)
               </a>
-              <button id="copyEmailHero" type="button" class="px-4 py-3.5 rounded-xl border border-white/10 text-xs font-mono text-slate-300 hover:text-emerald-400 hover:border-emerald-500/30 transition flex items-center gap-2">
+              <button id="copyEmailHero" type="button" class="px-4 py-3.5 rounded-full bg-sand/90 border border-ink/20 text-xs font-mono text-ink/85 hover:border-ink transition flex items-center gap-2">
                 <span id="copyEmailHeroText">gurpreet231201@gmail.com</span>
-                <svg class="w-3.5 h-3.5 opacity-70" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
               </button>
             </div>
 
-            <!-- Social Strip -->
-            <div class="mt-8 flex items-center gap-6 text-xs font-mono text-slate-400">
-              <a href="https://github.com/Gurpreetsi2312" target="_blank" rel="noopener noreferrer" class="hover:text-white transition flex items-center gap-2">
+            <!-- Social Links -->
+            <div class="hero-enter delay-4 mt-8 flex flex-wrap items-center gap-6 text-xs font-mono text-ink/70">
+              <a href="https://github.com/Gurpreetsi2312" target="_blank" rel="noopener noreferrer" class="hover:text-emeraldDeep transition flex items-center gap-2">
                 <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
                 github.com/Gurpreetsi2312
               </a>
-              <a href="https://www.linkedin.com/in/gurpreet-singh-0252201b6" target="_blank" rel="noopener noreferrer" class="hover:text-white transition flex items-center gap-2">
+              <a href="https://www.linkedin.com/in/gurpreet-singh-0252201b6" target="_blank" rel="noopener noreferrer" class="hover:text-emeraldDeep transition flex items-center gap-2">
                 <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
                 LinkedIn Profile
               </a>
             </div>
           </div>
 
-          <!-- Right Column: Bento Performance Dashboard -->
-          <div class="lg:col-span-5 grid grid-cols-2 gap-4">
-            <!-- Lighthouse Gauge Card -->
-            <div class="col-span-2 glass-card rounded-2xl p-5 flex items-center justify-between gap-4">
+          <!-- Right Bento Telemetry Column -->
+          <div class="lg:col-span-5 hero-enter delay-2 grid grid-cols-2 gap-4">
+            <!-- PageSpeed Gauge Card -->
+            <div class="col-span-2 tactile-card rounded-2xl p-6 flex items-center justify-between gap-4">
               <div>
-                <p class="text-[11px] font-mono uppercase tracking-wider text-emerald-400">Core Web Vitals Benchmark</p>
-                <p class="text-lg font-bold text-white mt-1">90+ PageSpeed Standard</p>
-                <p class="text-xs text-slate-400 mt-1 leading-relaxed">
-                  Critical CSS, asset minification, image pipelines & query pruning across 25+ client deployments.
+                <span class="text-[11px] font-mono uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-100 text-emeraldDeep font-semibold">Core Web Vitals</span>
+                <p class="text-xl font-extrabold text-ink mt-2">90+ PageSpeed Standard</p>
+                <p class="text-xs text-ink/70 mt-1 leading-relaxed">
+                  Critical CSS, asset minification, image compression pipelines &amp; query pruning across 25+ builds.
                 </p>
               </div>
-              <div class="relative w-20 h-20 shrink-0 flex items-center justify-center">
+              <div class="relative w-20 h-20 shrink-0 flex items-center justify-center float-slow">
                 <svg class="w-20 h-20 -rotate-90" viewBox="0 0 80 80">
-                  <circle cx="40" cy="40" r="32" stroke="rgba(255,255,255,0.08)" stroke-width="6" fill="none" />
-                  <circle cx="40" cy="40" r="32" stroke="#10B981" stroke-width="6" stroke-dasharray="201" stroke-dashoffset="10" stroke-linecap="round" fill="none" />
+                  <circle cx="40" cy="40" r="32" stroke="#E5E1D8" stroke-width="6.5" fill="none" />
+                  <circle cx="40" cy="40" r="32" stroke="#059669" stroke-width="6.5" stroke-dasharray="201" stroke-dashoffset="10" stroke-linecap="round" fill="none" />
                 </svg>
-                <span class="absolute font-mono text-lg font-bold text-emerald-400">96</span>
+                <span class="absolute font-mono text-lg font-bold text-ink">96</span>
               </div>
             </div>
 
-            <!-- Metric Card 1 -->
-            <div class="glass-card rounded-2xl p-5">
-              <p class="text-2xl sm:text-3xl font-extrabold text-white">25+</p>
-              <p class="text-xs font-medium text-slate-300 mt-1">Production Stores</p>
-              <p class="text-[11px] text-slate-500 mt-0.5">WordPress & Shopify</p>
+            <!-- Animated Metric 1 -->
+            <div class="tactile-card rounded-2xl p-5 bg-white">
+              <p class="text-3xl font-extrabold text-ink"><span class="count-up" data-target="25">25</span>+</p>
+              <p class="text-xs font-bold text-ink mt-1">Production Stores</p>
+              <p class="text-[11px] text-ink/60 mt-0.5">WordPress &amp; Shopify</p>
             </div>
 
-            <!-- Metric Card 2 -->
-            <div class="glass-card rounded-2xl p-5">
-              <p class="text-2xl sm:text-3xl font-extrabold text-emerald-400">+22%</p>
-              <p class="text-xs font-medium text-slate-300 mt-1">Mobile Conversion</p>
-              <p class="text-[11px] text-slate-500 mt-0.5">Sub-1.8s Liquid UX</p>
+            <!-- Animated Metric 2 -->
+            <div class="tactile-card rounded-2xl p-5 bg-[#ECFDF5]">
+              <p class="text-3xl font-extrabold text-emeraldDeep">+<span class="count-up" data-target="22">22</span>%</p>
+              <p class="text-xs font-bold text-ink mt-1">Mobile Conversion</p>
+              <p class="text-[11px] text-ink/60 mt-0.5">Sub-1.8s Liquid UX</p>
             </div>
 
-            <!-- Before / After Load Speed Bar -->
-            <div class="col-span-2 glass-card rounded-2xl p-5">
+            <!-- Speed Comparison Bar -->
+            <div class="col-span-2 tactile-card rounded-2xl p-5">
               <div class="flex items-center justify-between text-xs font-mono mb-3">
-                <span class="text-slate-400">Avg. Client Load Time Reduction</span>
-                <span class="text-emerald-400 font-semibold">-35%+ Faster</span>
+                <span class="text-ink/70 font-medium">Avg. Load Time Reduction</span>
+                <span class="text-terracotta font-bold">-35%+ Faster</span>
               </div>
-              <div class="space-y-2.5 text-[11px] font-mono">
+              <div class="space-y-3 text-[11px] font-mono">
                 <div>
-                  <div class="flex justify-between text-slate-500 mb-1">
+                  <div class="flex justify-between text-ink/60 mb-1">
                     <span>Legacy Theme / App Bloat</span>
                     <span>3.4s LCP</span>
                   </div>
-                  <div class="w-full h-2 rounded-full bg-white/[0.06] overflow-hidden">
-                    <div class="w-[82%] h-full rounded-full bg-slate-600"></div>
+                  <div class="w-full h-2.5 rounded-full bg-sand overflow-hidden border border-ink/10">
+                    <div class="w-[82%] h-full rounded-full bg-ink/30"></div>
                   </div>
                 </div>
                 <div>
-                  <div class="flex justify-between text-emerald-300 mb-1">
+                  <div class="flex justify-between text-ink font-semibold mb-1">
                     <span>Custom Engineered Build</span>
-                    <span>1.7s LCP</span>
+                    <span class="text-emeraldDeep">1.7s LCP</span>
                   </div>
-                  <div class="w-full h-2 rounded-full bg-white/[0.06] overflow-hidden">
-                    <div class="w-[41%] h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-300"></div>
+                  <div class="w-full h-2.5 rounded-full bg-sand overflow-hidden border border-ink/10">
+                    <div class="w-[41%] h-full rounded-full bg-emeraldDeep"></div>
                   </div>
                 </div>
               </div>
@@ -217,23 +282,60 @@
       </div>
     </section>
 
-    <!-- Featured Architecture Case Studies (Interactive Filter + Modal) -->
-    <section id="work" class="max-w-6xl mx-auto px-5 py-20 border-b border-white/[0.07]">
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+    <!-- High-Contrast Kinetic Marquee Banner -->
+    <div class="marquee-wrapper bg-ink text-cream py-4 border-b border-ink overflow-hidden select-none">
+      <div class="animate-marquee flex items-center gap-8 font-mono text-xs sm:text-sm tracking-wider uppercase">
+        <span class="flex items-center gap-8">
+          <span>Shopify Liquid Architecture</span>
+          <span class="text-emerald-400">✦</span>
+          <span>WordPress Custom Themes &amp; Plugins</span>
+          <span class="text-terracotta">✦</span>
+          <span>Core Web Vitals 90+</span>
+          <span class="text-emerald-400">✦</span>
+          <span>Gutenberg / FSE &amp; ACF Pro</span>
+          <span class="text-terracotta">✦</span>
+          <span>WooCommerce AI &amp; llms.txt</span>
+          <span class="text-emerald-400">✦</span>
+          <span>REST API &amp; Webhook Integrations</span>
+          <span class="text-terracotta">✦</span>
+        </span>
+        <!-- Seamless Duplicate Track -->
+        <span class="flex items-center gap-8" aria-hidden="true">
+          <span>Shopify Liquid Architecture</span>
+          <span class="text-emerald-400">✦</span>
+          <span>WordPress Custom Themes &amp; Plugins</span>
+          <span class="text-terracotta">✦</span>
+          <span>Core Web Vitals 90+</span>
+          <span class="text-emerald-400">✦</span>
+          <span>Gutenberg / FSE &amp; ACF Pro</span>
+          <span class="text-terracotta">✦</span>
+          <span>WooCommerce AI &amp; llms.txt</span>
+          <span class="text-emerald-400">✦</span>
+          <span>REST API &amp; Webhook Integrations</span>
+          <span class="text-terracotta">✦</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Engineering Case Studies -->
+    <section id="work" class="max-w-6xl mx-auto px-5 py-20 border-b border-ink/15">
+      <div class="reveal flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
         <div>
-          <p class="text-xs font-mono uppercase tracking-wider text-emerald-400">Engineering Case Studies</p>
-          <h2 class="text-2xl sm:text-4xl font-bold text-white mt-1.5">Architecture & Measurable Impact</h2>
+          <p class="text-xs font-mono uppercase tracking-wider text-terracotta font-semibold">Engineering Case Studies</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-ink mt-1.5">
+            Architecture &amp; <span class="font-serif italic font-normal text-emeraldDeep">measurable</span> impact
+          </h2>
         </div>
 
         <!-- Interactive Category Filter -->
         <div class="flex flex-wrap gap-2" role="tablist" aria-label="Filter projects">
-          <button data-filter="all" class="filter-btn active px-3.5 py-1.5 rounded-lg text-xs font-mono bg-emerald-500 text-obsidian font-semibold transition">
+          <button data-filter="all" class="filter-btn px-4 py-2 rounded-full text-xs font-mono bg-ink text-cream font-semibold transition">
             All Builds
           </button>
-          <button data-filter="shopify" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-mono bg-white/[0.04] border border-white/10 text-slate-300 hover:text-white transition">
+          <button data-filter="shopify" class="filter-btn px-4 py-2 rounded-full text-xs font-mono bg-white border border-ink/20 text-ink hover:border-ink transition">
             Shopify / Liquid
           </button>
-          <button data-filter="wordpress" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-mono bg-white/[0.04] border border-white/10 text-slate-300 hover:text-white transition">
+          <button data-filter="wordpress" class="filter-btn px-4 py-2 rounded-full text-xs font-mono bg-white border border-ink/20 text-ink hover:border-ink transition">
             WordPress / Plugins
           </button>
         </div>
@@ -242,143 +344,143 @@
       <div class="grid md:grid-cols-3 gap-7">
 
         <!-- Case Study 1: Shopify -->
-        <article data-category="shopify" class="project-card glass-card rounded-2xl overflow-hidden flex flex-col justify-between transition duration-300">
+        <article data-category="shopify" class="reveal project-card tactile-card rounded-2xl overflow-hidden flex flex-col justify-between">
           <div>
-            <!-- Browser Window Wireframe Preview -->
-            <div class="bg-[#090D18] border-b border-white/[0.07] p-4">
+            <!-- Light Editorial Browser Preview -->
+            <div class="bg-sand border-b border-ink/15 p-4">
               <div class="flex items-center justify-between mb-3">
                 <div class="flex items-center gap-1.5">
-                  <span class="w-2.5 h-2.5 rounded-full bg-rose-500/60"></span>
-                  <span class="w-2.5 h-2.5 rounded-full bg-amber-500/60"></span>
-                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/60"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-terracotta"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-emeraldDeep"></span>
                 </div>
-                <span class="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">1.7s LCP • +22% CVR</span>
+                <span class="text-[10px] font-mono font-semibold text-emeraldDeep bg-emerald-100 px-2.5 py-0.5 rounded-full">1.7s LCP • +22% CVR</span>
               </div>
-              <div class="rounded-lg bg-panel border border-white/[0.06] p-3 space-y-2">
+              <div class="rounded-xl bg-white border border-ink/15 p-3 space-y-2 shadow-sm">
                 <div class="flex items-center justify-between">
-                  <div class="h-2.5 w-20 rounded bg-white/15"></div>
-                  <div class="h-4 w-14 rounded bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-[9px] font-mono text-emerald-300">AJAX Cart</div>
+                  <div class="h-2.5 w-20 rounded bg-ink/15"></div>
+                  <div class="px-2 py-0.5 rounded bg-emerald-100 text-[9px] font-mono font-semibold text-emeraldDeep">AJAX Drawer</div>
                 </div>
                 <div class="grid grid-cols-3 gap-2 pt-1">
-                  <div class="h-12 rounded bg-white/[0.04] border border-white/[0.05]"></div>
-                  <div class="h-12 rounded bg-white/[0.04] border border-white/[0.05]"></div>
-                  <div class="h-12 rounded bg-emerald-500/10 border border-emerald-500/25"></div>
+                  <div class="h-12 rounded-lg bg-cream border border-ink/10"></div>
+                  <div class="h-12 rounded-lg bg-cream border border-ink/10"></div>
+                  <div class="h-12 rounded-lg bg-emerald-50 border border-emeraldDeep/30"></div>
                 </div>
               </div>
             </div>
 
             <div class="p-6">
               <div class="flex items-center justify-between gap-2 mb-3">
-                <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Shopify / Liquid</span>
-                <span class="text-xs font-mono text-slate-400">D2C Storefront</span>
+                <span class="text-[11px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emeraldDeep">Shopify / Liquid</span>
+                <span class="text-xs font-mono text-ink/60">D2C Storefront</span>
               </div>
-              <h3 class="text-lg font-bold text-white">Custom E-Commerce Storefront</h3>
-              <p class="text-sm text-slate-400 mt-2.5 leading-relaxed">
-                Engineered custom collection filtering, slide-out AJAX cart drawers, and multi-currency checkout flows without heavy third-party script bloat.
+              <h3 class="text-lg font-bold text-ink">Custom E-Commerce Storefront</h3>
+              <p class="text-sm text-ink/75 mt-2.5 leading-relaxed">
+                Engineered custom collection filtering, slide-out AJAX cart drawers, and multi-currency checkout flows—lifting mobile conversions by 22% with sub-1.8s load times.
               </p>
             </div>
           </div>
 
           <div class="px-6 pb-6 pt-2">
             <div class="flex flex-wrap gap-1.5 mb-5">
-              <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-white/[0.04] text-slate-400">Liquid</span>
-              <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-white/[0.04] text-slate-400">ES6+ JS</span>
-              <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-white/[0.04] text-slate-400">Multi-Currency</span>
+              <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-sand text-ink/80">Liquid</span>
+              <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-sand text-ink/80">ES6+ JS</span>
+              <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-sand text-ink/80">Multi-Currency</span>
             </div>
-            <button type="button" onclick="openModal('shopify')" class="w-full py-2.5 rounded-xl bg-white/[0.04] hover:bg-emerald-500 hover:text-obsidian border border-white/10 text-xs font-mono font-medium text-slate-200 transition">
+            <button type="button" onclick="openModal('shopify')" class="w-full py-2.5 rounded-xl bg-cream hover:bg-ink hover:text-cream border border-ink/25 text-xs font-mono font-semibold text-ink transition">
               Inspect Architecture →
             </button>
           </div>
         </article>
 
         <!-- Case Study 2: WordPress ACF / Gutenberg -->
-        <article data-category="wordpress" class="project-card glass-card rounded-2xl overflow-hidden flex flex-col justify-between transition duration-300">
+        <article data-category="wordpress" class="reveal project-card tactile-card rounded-2xl overflow-hidden flex flex-col justify-between" style="transition-delay: 80ms;">
           <div>
-            <!-- Browser Window Wireframe Preview -->
-            <div class="bg-[#090D18] border-b border-white/[0.07] p-4">
+            <!-- Light Editorial Browser Preview -->
+            <div class="bg-sand border-b border-ink/15 p-4">
               <div class="flex items-center justify-between mb-3">
                 <div class="flex items-center gap-1.5">
-                  <span class="w-2.5 h-2.5 rounded-full bg-rose-500/60"></span>
-                  <span class="w-2.5 h-2.5 rounded-full bg-amber-500/60"></span>
-                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/60"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-terracotta"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-emeraldDeep"></span>
                 </div>
-                <span class="text-[10px] font-mono text-sky-400 bg-sky-500/10 px-2 py-0.5 rounded">-50% Build Time</span>
+                <span class="text-[10px] font-mono font-semibold text-terracotta bg-orange-100 px-2.5 py-0.5 rounded-full">-50% Build Time</span>
               </div>
-              <div class="rounded-lg bg-panel border border-white/[0.06] p-3 space-y-2">
+              <div class="rounded-xl bg-white border border-ink/15 p-3 space-y-2 shadow-sm">
                 <div class="flex items-center gap-2">
-                  <span class="px-1.5 py-0.5 rounded bg-sky-500/15 text-[9px] font-mono text-sky-300">ACF Block</span>
-                  <span class="px-1.5 py-0.5 rounded bg-white/[0.06] text-[9px] font-mono text-slate-400">REST JSON</span>
+                  <span class="px-2 py-0.5 rounded bg-orange-100 text-[9px] font-mono font-semibold text-terracotta">ACF Block</span>
+                  <span class="px-2 py-0.5 rounded bg-sand text-[9px] font-mono text-ink/70">REST JSON</span>
                 </div>
                 <div class="grid grid-cols-2 gap-2 pt-1">
-                  <div class="h-12 rounded bg-white/[0.04] border border-dashed border-white/15"></div>
-                  <div class="h-12 rounded bg-sky-500/10 border border-dashed border-sky-500/30"></div>
+                  <div class="h-12 rounded-lg bg-cream border border-dashed border-ink/25"></div>
+                  <div class="h-12 rounded-lg bg-orange-50 border border-dashed border-terracotta/40"></div>
                 </div>
               </div>
             </div>
 
             <div class="p-6">
               <div class="flex items-center justify-between gap-2 mb-3">
-                <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-sky-500/10 text-sky-400 border border-sky-500/20">WordPress / ACF Pro</span>
-                <span class="text-xs font-mono text-slate-400">Modular CMS</span>
+                <span class="text-[11px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-orange-100 text-terracotta">WordPress / ACF Pro</span>
+                <span class="text-xs font-mono text-ink/60">Modular CMS</span>
               </div>
-              <h3 class="text-lg font-bold text-white">Modular Corporate & Headless Theme</h3>
-              <p class="text-sm text-slate-400 mt-2.5 leading-relaxed">
-                Developed a reusable Gutenberg/FSE block architecture with ACF Pro schemas and custom REST API endpoints, cutting editorial page assembly time by 50%.
+              <h3 class="text-lg font-bold text-ink">Modular Corporate &amp; Headless Theme</h3>
+              <p class="text-sm text-ink/75 mt-2.5 leading-relaxed">
+                Developed a reusable Gutenberg/FSE block theme featuring custom ACF Pro schemas and REST API endpoints, reducing page assembly time for content teams by 50%.
               </p>
             </div>
           </div>
 
           <div class="px-6 pb-6 pt-2">
             <div class="flex flex-wrap gap-1.5 mb-5">
-              <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-white/[0.04] text-slate-400">Gutenberg / FSE</span>
-              <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-white/[0.04] text-slate-400">ACF Pro</span>
-              <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-white/[0.04] text-slate-400">REST API</span>
+              <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-sand text-ink/80">Gutenberg / FSE</span>
+              <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-sand text-ink/80">ACF Pro</span>
+              <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-sand text-ink/80">REST API</span>
             </div>
-            <button type="button" onclick="openModal('wordpress')" class="w-full py-2.5 rounded-xl bg-white/[0.04] hover:bg-emerald-500 hover:text-obsidian border border-white/10 text-xs font-mono font-medium text-slate-200 transition">
+            <button type="button" onclick="openModal('wordpress')" class="w-full py-2.5 rounded-xl bg-cream hover:bg-ink hover:text-cream border border-ink/25 text-xs font-mono font-semibold text-ink transition">
               Inspect Architecture →
             </button>
           </div>
         </article>
 
         <!-- Case Study 3: Custom Plugin / AI Search -->
-        <article data-category="wordpress" class="project-card glass-card rounded-2xl overflow-hidden flex flex-col justify-between transition duration-300">
+        <article data-category="wordpress" class="reveal project-card tactile-card rounded-2xl overflow-hidden flex flex-col justify-between" style="transition-delay: 160ms;">
           <div>
-            <!-- Browser Window Wireframe Preview -->
-            <div class="bg-[#090D18] border-b border-white/[0.07] p-4">
+            <!-- Light Editorial Browser Preview -->
+            <div class="bg-sand border-b border-ink/15 p-4">
               <div class="flex items-center justify-between mb-3">
                 <div class="flex items-center gap-1.5">
-                  <span class="w-2.5 h-2.5 rounded-full bg-rose-500/60"></span>
-                  <span class="w-2.5 h-2.5 rounded-full bg-amber-500/60"></span>
-                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/60"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-terracotta"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-emeraldDeep"></span>
                 </div>
-                <span class="text-[10px] font-mono text-purple-300 bg-purple-500/10 px-2 py-0.5 rounded">/llms.txt • SQL</span>
+                <span class="text-[10px] font-mono font-semibold text-ink bg-white border border-ink/15 px-2.5 py-0.5 rounded-full">/llms.txt • SQL</span>
               </div>
-              <div class="rounded-lg bg-panel border border-white/[0.06] p-3 font-mono text-[10px] text-slate-400 space-y-1">
+              <div class="rounded-xl bg-ink text-cream p-3 font-mono text-[10px] space-y-1 shadow-sm">
                 <p class="text-emerald-400"># WooCommerce Catalog Feed</p>
                 <p>&gt; GET /llms.txt HTTP/1.1 200 OK</p>
-                <p class="text-slate-500">Tokens: 1,420 • Crawler: Logged</p>
+                <p class="text-cream/60">Tokens: 1,420 • Crawler: Logged</p>
               </div>
             </div>
 
             <div class="p-6">
               <div class="flex items-center justify-between gap-2 mb-3">
-                <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-purple-500/10 text-purple-300 border border-purple-500/20">Plugin R&D • GEO</span>
-                <span class="text-xs font-mono text-slate-400">PHP 8 • MySQL</span>
+                <span class="text-[11px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-ink text-cream">Plugin R&amp;D • GEO</span>
+                <span class="text-xs font-mono text-ink/60">PHP 8 • MySQL</span>
               </div>
-              <h3 class="text-lg font-bold text-white">WooCommerce AI Search & <code>llms.txt</code></h3>
-              <p class="text-sm text-slate-400 mt-2.5 leading-relaxed">
-                Engineered a custom plugin compiling WooCommerce product catalogs into token-efficient Markdown endpoints with custom MySQL indexing and bot telemetry.
+              <h3 class="text-lg font-bold text-ink">WooCommerce AI Search &amp; <code>llms.txt</code></h3>
+              <p class="text-sm text-ink/75 mt-2.5 leading-relaxed">
+                Built a custom WordPress plugin compiling WooCommerce product catalogs into token-efficient Markdown endpoints with custom MySQL indexing and bot telemetry.
               </p>
             </div>
           </div>
 
           <div class="px-6 pb-6 pt-2">
             <div class="flex flex-wrap gap-1.5 mb-5">
-              <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-white/[0.04] text-slate-400">Custom Plugin</span>
-              <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-white/[0.04] text-slate-400">MySQL</span>
-              <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-white/[0.04] text-slate-400">AI Discovery</span>
+              <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-sand text-ink/80">Custom Plugin</span>
+              <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-sand text-ink/80">MySQL</span>
+              <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-sand text-ink/80">AI Discovery</span>
             </div>
-            <button type="button" onclick="openModal('plugin')" class="w-full py-2.5 rounded-xl bg-white/[0.04] hover:bg-emerald-500 hover:text-obsidian border border-white/10 text-xs font-mono font-medium text-slate-200 transition">
+            <button type="button" onclick="openModal('plugin')" class="w-full py-2.5 rounded-xl bg-cream hover:bg-ink hover:text-cream border border-ink/25 text-xs font-mono font-semibold text-ink transition">
               Inspect Architecture →
             </button>
           </div>
@@ -387,149 +489,153 @@
       </div>
     </section>
 
-    <!-- Live International Storefronts -->
-    <section id="stores" class="max-w-6xl mx-auto px-5 py-20 border-b border-white/[0.07]">
-      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
-        <div>
-          <p class="text-xs font-mono uppercase tracking-wider text-emerald-400">Production Deployments</p>
-          <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1.5">Live Australian Retail Storefronts</h2>
+    <!-- Live Australian Retail Storefronts -->
+    <section id="stores" class="bg-sand/70 border-b border-ink/15 py-20">
+      <div class="max-w-6xl mx-auto px-5">
+        <div class="reveal flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+          <div>
+            <p class="text-xs font-mono uppercase tracking-wider text-emeraldDeep font-semibold">Production Deployments</p>
+            <h2 class="text-3xl font-extrabold text-ink mt-1.5">Live Australian Retail Storefronts</h2>
+          </div>
+          <p class="text-sm text-ink/70 max-w-md">
+            Commercial D2C storefronts engineered and maintained for Australian retail brands—click any card to inspect the live store.
+          </p>
         </div>
-        <p class="text-sm text-slate-400 max-w-md">
-          Commercial storefronts engineered and maintained for Australian D2C brands—click any store to inspect live UX and speed.
-        </p>
-      </div>
 
-      <div class="grid md:grid-cols-3 gap-6">
-        <a href="https://attitudesplash.com.au" target="_blank" rel="noopener noreferrer" class="group glass-card rounded-2xl p-6 flex flex-col justify-between transition">
-          <div>
-            <div class="flex items-center justify-between mb-4">
-              <span class="text-[11px] font-mono px-2.5 py-1 rounded bg-white/[0.04] text-slate-300">attitudesplash.com.au</span>
-              <span class="w-8 h-8 rounded-full bg-white/[0.04] group-hover:bg-emerald-500 group-hover:text-obsidian flex items-center justify-center text-xs font-mono transition">↗</span>
+        <div class="grid md:grid-cols-3 gap-6">
+          <a href="https://attitudesplash.com.au" target="_blank" rel="noopener noreferrer" class="reveal group tactile-card rounded-2xl p-6 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-[11px] font-mono px-2.5 py-1 rounded-full bg-cream border border-ink/15 text-ink">attitudesplash.com.au</span>
+                <span class="w-9 h-9 rounded-full bg-cream border border-ink/20 group-hover:bg-emeraldDeep group-hover:text-white group-hover:border-emeraldDeep flex items-center justify-center text-sm font-mono transition-all duration-300 group-hover:rotate-45">↗</span>
+              </div>
+              <h3 class="text-xl font-bold text-ink group-hover:text-emeraldDeep transition">Attitude Splash</h3>
+              <p class="text-sm text-ink/75 mt-2 leading-relaxed">
+                Swimwear &amp; lifestyle D2C store. Built responsive collection grids, streamlined product variant selectors, and mobile-first cart flows.
+              </p>
             </div>
-            <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition">Attitude Splash</h3>
-            <p class="text-sm text-slate-400 mt-2 leading-relaxed">
-              Swimwear & lifestyle D2C store. Built responsive collection grids, streamlined product variant selectors, and mobile-first cart flows.
-            </p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-white/[0.06] flex items-center justify-between text-xs font-mono text-slate-400">
-            <span>Swimwear & Apparel</span>
-            <span class="text-emerald-400">Live Production</span>
-          </div>
-        </a>
+            <div class="mt-6 pt-4 border-t border-ink/10 flex items-center justify-between text-xs font-mono">
+              <span class="text-ink/60">Swimwear &amp; Apparel</span>
+              <span class="text-emeraldDeep font-semibold">● Live Store</span>
+            </div>
+          </a>
 
-        <a href="https://modestoshoes.com.au" target="_blank" rel="noopener noreferrer" class="group glass-card rounded-2xl p-6 flex flex-col justify-between transition">
-          <div>
-            <div class="flex items-center justify-between mb-4">
-              <span class="text-[11px] font-mono px-2.5 py-1 rounded bg-white/[0.04] text-slate-300">modestoshoes.com.au</span>
-              <span class="w-8 h-8 rounded-full bg-white/[0.04] group-hover:bg-emerald-500 group-hover:text-obsidian flex items-center justify-center text-xs font-mono transition">↗</span>
+          <a href="https://modestoshoes.com.au" target="_blank" rel="noopener noreferrer" class="reveal group tactile-card rounded-2xl p-6 flex flex-col justify-between" style="transition-delay: 80ms;">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-[11px] font-mono px-2.5 py-1 rounded-full bg-cream border border-ink/15 text-ink">modestoshoes.com.au</span>
+                <span class="w-9 h-9 rounded-full bg-cream border border-ink/20 group-hover:bg-emeraldDeep group-hover:text-white group-hover:border-emeraldDeep flex items-center justify-center text-sm font-mono transition-all duration-300 group-hover:rotate-45">↗</span>
+              </div>
+              <h3 class="text-xl font-bold text-ink group-hover:text-emeraldDeep transition">Modesto Shoes</h3>
+              <p class="text-sm text-ink/75 mt-2 leading-relaxed">
+                Multi-category footwear retailer. Engineered intuitive size/fit variant UX, lazy-loaded high-res product galleries, and clean PDP hierarchy.
+              </p>
             </div>
-            <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition">Modesto Shoes</h3>
-            <p class="text-sm text-slate-400 mt-2 leading-relaxed">
-              Multi-category footwear retailer. Engineered intuitive size/fit variant UX, lazy-loaded high-res product galleries, and clean PDP hierarchy.
-            </p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-white/[0.06] flex items-center justify-between text-xs font-mono text-slate-400">
-            <span>Footwear Retail</span>
-            <span class="text-emerald-400">Live Production</span>
-          </div>
-        </a>
+            <div class="mt-6 pt-4 border-t border-ink/10 flex items-center justify-between text-xs font-mono">
+              <span class="text-ink/60">Footwear Retail</span>
+              <span class="text-emeraldDeep font-semibold">● Live Store</span>
+            </div>
+          </a>
 
-        <a href="https://shop.mobile-experts.com.au" target="_blank" rel="noopener noreferrer" class="group glass-card rounded-2xl p-6 flex flex-col justify-between transition">
-          <div>
-            <div class="flex items-center justify-between mb-4">
-              <span class="text-[11px] font-mono px-2.5 py-1 rounded bg-white/[0.04] text-slate-300">shop.mobile-experts.com.au</span>
-              <span class="w-8 h-8 rounded-full bg-white/[0.04] group-hover:bg-emerald-500 group-hover:text-obsidian flex items-center justify-center text-xs font-mono transition">↗</span>
+          <a href="https://shop.mobile-experts.com.au" target="_blank" rel="noopener noreferrer" class="reveal group tactile-card rounded-2xl p-6 flex flex-col justify-between" style="transition-delay: 160ms;">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-[11px] font-mono px-2.5 py-1 rounded-full bg-cream border border-ink/15 text-ink">shop.mobile-experts.com.au</span>
+                <span class="w-9 h-9 rounded-full bg-cream border border-ink/20 group-hover:bg-emeraldDeep group-hover:text-white group-hover:border-emeraldDeep flex items-center justify-center text-sm font-mono transition-all duration-300 group-hover:rotate-45">↗</span>
+              </div>
+              <h3 class="text-xl font-bold text-ink group-hover:text-emeraldDeep transition">Mobile Experts</h3>
+              <p class="text-sm text-ink/75 mt-2 leading-relaxed">
+                High-SKU consumer electronics storefront built for fast device-compatibility discovery, clean taxonomy filtering, and structured JSON-LD schema.
+              </p>
             </div>
-            <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition">Mobile Experts</h3>
-            <p class="text-sm text-slate-400 mt-2 leading-relaxed">
-              High-SKU consumer electronics storefront built for fast device-compatibility discovery, clean taxonomy filtering, and structured JSON-LD schema.
-            </p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-white/[0.06] flex items-center justify-between text-xs font-mono text-slate-400">
-            <span>High-SKU Tech Retail</span>
-            <span class="text-emerald-400">Live Production</span>
-          </div>
-        </a>
+            <div class="mt-6 pt-4 border-t border-ink/10 flex items-center justify-between text-xs font-mono">
+              <span class="text-ink/60">High-SKU Tech Retail</span>
+              <span class="text-emeraldDeep font-semibold">● Live Store</span>
+            </div>
+          </a>
+        </div>
       </div>
     </section>
 
-    <!-- Career Experience & Education -->
-    <section id="experience" class="max-w-6xl mx-auto px-5 py-20 border-b border-white/[0.07]">
+    <!-- Work Experience & Education -->
+    <section id="experience" class="max-w-6xl mx-auto px-5 py-20 border-b border-ink/15">
       <div class="grid lg:grid-cols-12 gap-10">
-        <div class="lg:col-span-4">
-          <p class="text-xs font-mono uppercase tracking-wider text-emerald-400">Career Track Record</p>
-          <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1.5">3+ Years Shipping Production Web Systems</h2>
-          <p class="text-sm text-slate-400 mt-4 leading-relaxed">
+        <div class="lg:col-span-4 reveal">
+          <p class="text-xs font-mono uppercase tracking-wider text-terracotta font-semibold">Career Track Record</p>
+          <h2 class="text-3xl font-extrabold text-ink mt-1.5">
+            3+ Years Shipping <span class="font-serif italic font-normal text-emeraldDeep">production</span> systems
+          </h2>
+          <p class="text-sm text-ink/75 mt-4 leading-relaxed">
             Proven track record across agency and product teams—turning Figma design systems into high-converting storefronts while maintaining 90+ PageSpeed benchmarks.
           </p>
 
           <!-- Education Card -->
-          <div class="mt-8 glass-card rounded-2xl p-5">
-            <p class="text-[11px] font-mono uppercase tracking-wider text-emerald-400">Academic Foundation</p>
-            <h3 class="text-base font-bold text-white mt-1">Bachelor of Computer Applications (BCA)</h3>
-            <p class="text-xs text-slate-400 mt-1">Gulzar Group of Institutes, Khanna, Punjab</p>
-            <div class="mt-3 pt-3 border-t border-white/[0.07] flex items-center justify-between text-xs font-mono">
-              <span class="text-slate-400">2020 – 2023</span>
-              <span class="text-emerald-400 font-semibold">CGPA: 7.92</span>
+          <div class="mt-8 tactile-card rounded-2xl p-6 bg-white">
+            <span class="text-[11px] font-mono uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-100 text-emeraldDeep font-semibold">Education</span>
+            <h3 class="text-base font-bold text-ink mt-3">Bachelor of Computer Applications (BCA)</h3>
+            <p class="text-xs text-ink/70 mt-1">Gulzar Group of Institutes, Khanna, Punjab</p>
+            <div class="mt-4 pt-3 border-t border-ink/10 flex items-center justify-between text-xs font-mono">
+              <span class="text-ink/60">2020 – 2023</span>
+              <span class="text-emeraldDeep font-bold">CGPA: 7.92</span>
             </div>
           </div>
         </div>
 
         <div class="lg:col-span-8 space-y-6">
           <!-- Role 1 -->
-          <div class="glass-card rounded-2xl p-6 sm:p-7 relative">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-white/[0.07]">
+          <div class="reveal tactile-card rounded-2xl p-6 sm:p-7">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-ink/10">
               <div>
-                <h3 class="text-lg font-bold text-white">Web Developer</h3>
-                <p class="text-sm text-emerald-400 font-medium">Blue Mile Digital • Mohali, Punjab</p>
+                <h3 class="text-lg font-bold text-ink">Web Developer</h3>
+                <p class="text-sm text-emeraldDeep font-semibold">Blue Mile Digital • Mohali, Punjab</p>
               </div>
-              <span class="text-xs font-mono px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 w-fit">
+              <span class="text-xs font-mono font-semibold px-3 py-1 rounded-full bg-emerald-100 text-emeraldDeep w-fit">
                 Feb 2025 – Present
               </span>
             </div>
-            <ul class="mt-4 space-y-3 text-sm text-slate-300 leading-relaxed">
+            <ul class="mt-4 space-y-3 text-sm text-ink/80 leading-relaxed">
               <li class="flex items-start gap-2.5">
-                <span class="text-emerald-400 mt-1">▹</span>
-                <span>Architected and scaled <strong class="text-white">25+ custom WordPress and Shopify storefronts</strong>, crafting bespoke Liquid templates and custom checkout flows aligned with conversion targets.</span>
+                <span class="text-emeraldDeep font-bold mt-0.5">→</span>
+                <span>Architected and scaled <strong class="text-ink">25+ custom WordPress and Shopify storefronts</strong>, crafting bespoke Liquid templates and custom checkout flows tailored to conversion goals.</span>
               </li>
               <li class="flex items-start gap-2.5">
-                <span class="text-emerald-400 mt-1">▹</span>
-                <span>Elevated Core Web Vitals and PageSpeed metrics across client sites, slashing average load times by <strong class="text-white">35%+</strong> via asset minification, critical CSS, and caching layers.</span>
+                <span class="text-emeraldDeep font-bold mt-0.5">→</span>
+                <span>Elevated Core Web Vitals and PageSpeed metrics across client sites, slashing average load times by <strong class="text-ink">35%+</strong> via asset minification, critical CSS, and caching hierarchies.</span>
               </li>
               <li class="flex items-start gap-2.5">
-                <span class="text-emerald-400 mt-1">▹</span>
-                <span>Engineered custom WordPress plugins and child themes using <strong class="text-white">PHP and REST APIs</strong> to sync dynamic product feeds and automate marketing pipelines.</span>
+                <span class="text-emeraldDeep font-bold mt-0.5">→</span>
+                <span>Engineered custom WordPress plugins and child themes using <strong class="text-ink">PHP and REST APIs</strong> to sync dynamic product feeds and automate marketing data pipelines.</span>
               </li>
               <li class="flex items-start gap-2.5">
-                <span class="text-emerald-400 mt-1">▹</span>
-                <span>Translated complex Figma design systems into pixel-perfect, cross-browser compatible frontend code.</span>
+                <span class="text-emeraldDeep font-bold mt-0.5">→</span>
+                <span>Translated complex Figma design systems into pixel-perfect, clean, cross-browser compatible frontend code.</span>
               </li>
             </ul>
           </div>
 
           <!-- Role 2 -->
-          <div class="glass-card rounded-2xl p-6 sm:p-7">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-white/[0.07]">
+          <div class="reveal tactile-card rounded-2xl p-6 sm:p-7" style="transition-delay: 80ms;">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-ink/10">
               <div>
-                <h3 class="text-lg font-bold text-white">Associate Software Developer</h3>
-                <p class="text-sm text-emerald-400 font-medium">My Virtual Teams • Ludhiana, Punjab</p>
+                <h3 class="text-lg font-bold text-ink">Associate Software Developer</h3>
+                <p class="text-sm text-terracotta font-semibold">My Virtual Teams • Ludhiana, Punjab</p>
               </div>
-              <span class="text-xs font-mono px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-slate-300 w-fit">
+              <span class="text-xs font-mono font-semibold px-3 py-1 rounded-full bg-sand border border-ink/15 text-ink w-fit">
                 Jun 2023 – Dec 2024
               </span>
             </div>
-            <ul class="mt-4 space-y-3 text-sm text-slate-300 leading-relaxed">
+            <ul class="mt-4 space-y-3 text-sm text-ink/80 leading-relaxed">
               <li class="flex items-start gap-2.5">
-                <span class="text-emerald-400 mt-1">▹</span>
-                <span>Engineered bespoke WordPress themes from scratch using <strong class="text-white">PHP, HTML5, CSS3, and modern JavaScript</strong> adhering to strict WordPress coding standards.</span>
+                <span class="text-terracotta font-bold mt-0.5">→</span>
+                <span>Engineered bespoke WordPress themes from scratch using <strong class="text-ink">PHP, HTML5, CSS3, and modern JavaScript</strong> adhering to strict WordPress coding standards.</span>
               </li>
               <li class="flex items-start gap-2.5">
-                <span class="text-emerald-400 mt-1">▹</span>
-                <span>Boosted Google PageSpeed scores to <strong class="text-white">90+</strong> across client deployments via image compression pipelines, database query pruning, and CDN configurations.</span>
+                <span class="text-terracotta font-bold mt-0.5">→</span>
+                <span>Boosted Google PageSpeed scores to <strong class="text-ink">90+</strong> across client deployments via image compression pipelines, database query pruning, and CDN configurations.</span>
               </li>
               <li class="flex items-start gap-2.5">
-                <span class="text-emerald-400 mt-1">▹</span>
-                <span>Delivered end-to-end technical support, security updates, and maintenance across high-traffic multi-site installations and WooCommerce setups.</span>
+                <span class="text-terracotta font-bold mt-0.5">→</span>
+                <span>Delivered end-to-end technical support, maintenance, and regular version updates across high-traffic multi-site installations and WooCommerce setups.</span>
               </li>
             </ul>
           </div>
@@ -537,61 +643,63 @@
       </div>
     </section>
 
-    <!-- Technical Stack Matrix -->
-    <section id="stack" class="max-w-6xl mx-auto px-5 py-20 border-b border-white/[0.07]">
-      <p class="text-xs font-mono uppercase tracking-wider text-emerald-400">Capabilities</p>
-      <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1.5 mb-10">Technical Stack & Tooling</h2>
+    <!-- Technical Capabilities Bento -->
+    <section id="stack" class="max-w-6xl mx-auto px-5 py-20 border-b border-ink/15">
+      <div class="reveal mb-10">
+        <p class="text-xs font-mono uppercase tracking-wider text-emeraldDeep font-semibold">Capabilities</p>
+        <h2 class="text-3xl font-extrabold text-ink mt-1.5">Technical Stack &amp; Tooling</h2>
+      </div>
 
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        <div class="glass-card rounded-2xl p-6">
-          <div class="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center font-mono text-xs text-emerald-400 mb-4">01</div>
-          <h3 class="font-bold text-white text-base mb-3">CMS & E-Commerce</h3>
+        <div class="reveal tactile-card rounded-2xl p-6">
+          <span class="inline-block font-mono text-xs font-bold px-2.5 py-1 rounded-md bg-emerald-100 text-emeraldDeep mb-4">01 / CMS</span>
+          <h3 class="font-bold text-ink text-base mb-3">CMS &amp; E-Commerce</h3>
           <div class="flex flex-wrap gap-1.5">
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/[0.04] text-slate-300">WordPress</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/[0.04] text-slate-300">WooCommerce</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/[0.04] text-slate-300">Shopify Liquid</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/[0.04] text-slate-300">Gutenberg / FSE</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/[0.04] text-slate-300">ACF Pro</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/[0.04] text-slate-300">Wix / Duda / Instapage</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">WordPress</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">WooCommerce</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">Shopify Liquid</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">Gutenberg / FSE</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">ACF Pro</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">Wix / Duda / Instapage</span>
           </div>
         </div>
 
-        <div class="glass-card rounded-2xl p-6">
-          <div class="w-9 h-9 rounded-lg bg-sky-500/10 border border-sky-500/25 flex items-center justify-center font-mono text-xs text-sky-400 mb-4">02</div>
-          <h3 class="font-bold text-white text-base mb-3">Frontend & UI</h3>
+        <div class="reveal tactile-card rounded-2xl p-6" style="transition-delay: 60ms;">
+          <span class="inline-block font-mono text-xs font-bold px-2.5 py-1 rounded-md bg-orange-100 text-terracotta mb-4">02 / UI</span>
+          <h3 class="font-bold text-ink text-base mb-3">Frontend Development</h3>
           <div class="flex flex-wrap gap-1.5">
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/[0.04] text-slate-300">HTML5</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/[0.04] text-slate-300">CSS3 / SCSS</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/[0.04] text-slate-300">JavaScript (ES6+)</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/[0.04] text-slate-300">Tailwind CSS</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/[0.04] text-slate-300">Bootstrap</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/[0.04] text-slate-300">Figma-to-Code</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">HTML5</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">CSS3 / SCSS</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">JavaScript (ES6+)</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">Tailwind CSS</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">Bootstrap</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">Figma-to-Code</span>
           </div>
         </div>
 
-        <div class="glass-card rounded-2xl p-6">
-          <div class="w-9 h-9 rounded-lg bg-purple-500/10 border border-purple-500/25 flex items-center justify-center font-mono text-xs text-purple-300 mb-4">03</div>
-          <h3 class="font-bold text-white text-base mb-3">Backend & APIs</h3>
+        <div class="reveal tactile-card rounded-2xl p-6" style="transition-delay: 120ms;">
+          <span class="inline-block font-mono text-xs font-bold px-2.5 py-1 rounded-md bg-sky-100 text-sky-800 mb-4">03 / API</span>
+          <h3 class="font-bold text-ink text-base mb-3">Backend &amp; Integrations</h3>
           <div class="flex flex-wrap gap-1.5">
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/[0.04] text-slate-300">PHP 8+</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/[0.04] text-slate-300">MySQL</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/[0.04] text-slate-300">WP REST API</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/[0.04] text-slate-300">Webhooks</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/[0.04] text-slate-300">Payment Gateways</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/[0.04] text-slate-300">Shipping APIs</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">PHP</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">MySQL</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">WP REST API</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">Webhooks</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">Payment Gateways</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">Shipping APIs</span>
           </div>
         </div>
 
-        <div class="glass-card rounded-2xl p-6">
-          <div class="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/25 flex items-center justify-center font-mono text-xs text-amber-300 mb-4">04</div>
-          <h3 class="font-bold text-white text-base mb-3">Speed & DevOps</h3>
+        <div class="reveal tactile-card rounded-2xl p-6" style="transition-delay: 180ms;">
+          <span class="inline-block font-mono text-xs font-bold px-2.5 py-1 rounded-md bg-amber-100 text-amber-900 mb-4">04 / OPS</span>
+          <h3 class="font-bold text-ink text-base mb-3">Speed &amp; Workflow</h3>
           <div class="flex flex-wrap gap-1.5">
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/[0.04] text-slate-300">Core Web Vitals</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/[0.04] text-slate-300">PageSpeed 90+</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/[0.04] text-slate-300">Git / GitHub</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/[0.04] text-slate-300">Vite</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/[0.04] text-slate-300">LocalWP</span>
-            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/[0.04] text-slate-300">cPanel / CDN</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">Core Web Vitals</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">PageSpeed 90+</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">Git / GitHub</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">Vite</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">LocalWP</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-cream border border-ink/10 text-ink">cPanel / CDN</span>
           </div>
         </div>
       </div>
@@ -599,59 +707,61 @@
 
     <!-- Contact Section -->
     <section id="contact" class="max-w-6xl mx-auto px-5 py-20">
-      <div class="glass-card rounded-3xl p-8 sm:p-12 grid lg:grid-cols-12 gap-10 items-start">
+      <div class="reveal tactile-card rounded-3xl p-8 sm:p-12 bg-white grid lg:grid-cols-12 gap-10 items-start">
         <div class="lg:col-span-6">
-          <p class="text-xs font-mono uppercase tracking-wider text-emerald-400">Let's Connect</p>
-          <h2 class="text-3xl sm:text-4xl font-bold text-white mt-2">Ready to ship faster code & higher-converting stores.</h2>
-          <p class="text-sm sm:text-base text-slate-400 mt-4 leading-relaxed">
-            Available for full-time or remote software/web engineering roles (Australia, UK, New Zealand, EU, India) as well as custom Shopify & WordPress builds.
+          <p class="text-xs font-mono uppercase tracking-wider text-terracotta font-semibold">Let's Connect</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-ink mt-2 leading-tight">
+            Ready to ship <span class="font-serif italic font-normal text-emeraldDeep">faster code</span> &amp; higher-converting stores.
+          </h2>
+          <p class="text-sm sm:text-base text-ink/75 mt-4 leading-relaxed">
+            Available for full-time or remote web engineering roles (Australia, UK, New Zealand, EU, India) as well as custom Shopify &amp; WordPress builds.
           </p>
 
           <div class="mt-8 space-y-3.5 text-sm font-mono">
-            <div class="flex items-center gap-3 text-slate-300">
-              <span class="text-emerald-400">Email:</span>
-              <a href="mailto:gurpreet231201@gmail.com" class="hover:text-emerald-400 transition">gurpreet231201@gmail.com</a>
+            <div class="flex items-center gap-3 text-ink">
+              <span class="text-emeraldDeep font-bold">Email:</span>
+              <a href="mailto:gurpreet231201@gmail.com" class="underline decoration-ink/30 hover:decoration-emeraldDeep hover:text-emeraldDeep transition">gurpreet231201@gmail.com</a>
             </div>
-            <div class="flex items-center gap-3 text-slate-300">
-              <span class="text-emerald-400">Phone:</span>
-              <a href="tel:+917009202092" class="hover:text-emerald-400 transition">+91 7009202092</a>
+            <div class="flex items-center gap-3 text-ink">
+              <span class="text-emeraldDeep font-bold">Phone:</span>
+              <a href="tel:+917009202092" class="underline decoration-ink/30 hover:decoration-emeraldDeep hover:text-emeraldDeep transition">+91 7009202092</a>
             </div>
-            <div class="flex items-center gap-3 text-slate-300">
-              <span class="text-emerald-400">LinkedIn:</span>
-              <a href="https://www.linkedin.com/in/gurpreet-singh-0252201b6" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-400 transition">/in/gurpreet-singh-0252201b6</a>
+            <div class="flex items-center gap-3 text-ink">
+              <span class="text-emeraldDeep font-bold">LinkedIn:</span>
+              <a href="https://www.linkedin.com/in/gurpreet-singh-0252201b6" target="_blank" rel="noopener noreferrer" class="underline decoration-ink/30 hover:decoration-emeraldDeep hover:text-emeraldDeep transition">/in/gurpreet-singh-0252201b6</a>
             </div>
-            <div class="flex items-center gap-3 text-slate-400">
-              <span class="text-emerald-400">Timezone:</span>
-              <span>IST (UTC+5:30) — Daily overlap with AU/NZ & UK/EU</span>
+            <div class="flex items-center gap-3 text-ink/70">
+              <span class="text-emeraldDeep font-bold">Timezone:</span>
+              <span>IST (UTC+5:30) — Daily overlap with AU/NZ &amp; UK/EU</span>
             </div>
           </div>
         </div>
 
-        <form id="inquiryForm" class="lg:col-span-6 bg-obsidian/80 border border-white/[0.08] rounded-2xl p-6 space-y-4">
+        <form id="inquiryForm" class="lg:col-span-6 bg-cream border-[1.5px] border-ink rounded-2xl p-6 space-y-4">
           <div>
-            <label for="senderName" class="block text-xs font-mono text-slate-400 mb-1.5">Your Name / Company</label>
+            <label for="senderName" class="block text-xs font-mono font-semibold text-ink mb-1.5">Your Name / Company</label>
             <input id="senderName" type="text" required placeholder="Sarah Jenkins — Melbourne Digital"
-              class="w-full px-4 py-3 rounded-xl bg-panel border border-white/10 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition" />
+              class="w-full px-4 py-3 rounded-xl bg-white border border-ink/25 text-sm text-ink placeholder-ink/40 focus:outline-none focus:border-emeraldDeep transition" />
           </div>
 
           <div>
-            <label for="inquiryType" class="block text-xs font-mono text-slate-400 mb-1.5">Inquiry Purpose</label>
+            <label for="inquiryType" class="block text-xs font-mono font-semibold text-ink mb-1.5">Inquiry Purpose</label>
             <select id="inquiryType"
-              class="w-full px-4 py-3 rounded-xl bg-panel border border-white/10 text-sm text-white focus:outline-none focus:border-emerald-500 transition">
+              class="w-full px-4 py-3 rounded-xl bg-white border border-ink/25 text-sm text-ink focus:outline-none focus:border-emeraldDeep transition">
               <option value="Full-Time / Remote Developer Role">Full-Time / Remote Developer Role</option>
               <option value="Shopify / WooCommerce Storefront Build">Shopify / WooCommerce Storefront Build</option>
-              <option value="Core Web Vitals & Speed Optimization">Core Web Vitals & Speed Optimization</option>
+              <option value="Core Web Vitals & Speed Optimization">Core Web Vitals &amp; Speed Optimization</option>
               <option value="Custom WordPress Plugin / API Integration">Custom WordPress Plugin / API Integration</option>
             </select>
           </div>
 
           <div>
-            <label for="inquiryDetails" class="block text-xs font-mono text-slate-400 mb-1.5">Role Details or Store URL</label>
+            <label for="inquiryDetails" class="block text-xs font-mono font-semibold text-ink mb-1.5">Role Details or Store URL</label>
             <textarea id="inquiryDetails" rows="3" required placeholder="Share role requirements, timezone overlap, or your store link..."
-              class="w-full px-4 py-3 rounded-xl bg-panel border border-white/10 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition"></textarea>
+              class="w-full px-4 py-3 rounded-xl bg-white border border-ink/25 text-sm text-ink placeholder-ink/40 focus:outline-none focus:border-emeraldDeep transition"></textarea>
           </div>
 
-          <button type="submit" class="w-full py-3.5 rounded-xl bg-emerald-500 text-obsidian font-semibold text-sm hover:bg-emerald-400 transition shadow-lg shadow-emerald-500/20">
+          <button type="submit" class="w-full py-3.5 rounded-full bg-ink text-cream font-semibold text-sm hover:bg-emeraldDeep transition-colors duration-300">
             Send Direct Email Inquiry →
           </button>
         </form>
@@ -660,26 +770,26 @@
 
   </main>
 
-  <footer class="border-t border-white/[0.07] py-8 text-center text-xs font-mono text-slate-500">
-    © 2026 Gurpreet Singh • Ludhiana, Punjab, India • Built with Clean HTML, Tailwind & Vanilla JS
+  <footer class="border-t border-ink/15 bg-sand/60 py-8 text-center text-xs font-mono text-ink/65">
+    © 2026 Gurpreet Singh • Ludhiana, Punjab, India • Built with Daylight Editorial Precision
   </footer>
 
   <!-- Interactive Architecture Modal -->
-  <div id="archModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-    <div class="glass-card max-w-xl w-full rounded-2xl p-6 sm:p-8 relative border border-white/15">
-      <button type="button" onclick="closeModal()" aria-label="Close modal" class="absolute top-5 right-5 w-8 h-8 rounded-lg bg-white/[0.06] hover:bg-white/[0.12] text-slate-300 flex items-center justify-center font-mono text-sm">
+  <div id="archModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/60 backdrop-blur-sm">
+    <div class="tactile-card bg-white max-w-xl w-full rounded-2xl p-6 sm:p-8 relative">
+      <button type="button" onclick="closeModal()" aria-label="Close modal" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-sand hover:bg-ink hover:text-cream text-ink flex items-center justify-center font-mono text-sm transition">
         ✕
       </button>
-      <p id="modalBadge" class="text-xs font-mono text-emerald-400 uppercase tracking-wider"></p>
-      <h3 id="modalTitle" class="text-xl sm:text-2xl font-bold text-white mt-1"></h3>
-      <p id="modalSummary" class="text-sm text-slate-300 mt-3 leading-relaxed"></p>
-      <div class="mt-5 pt-5 border-t border-white/10">
-        <p class="text-xs font-mono uppercase tracking-wider text-slate-400 mb-3">Technical Implementation Highlights</p>
-        <ul id="modalBullets" class="space-y-2.5 text-sm text-slate-300"></ul>
+      <p id="modalBadge" class="text-xs font-mono font-semibold text-emeraldDeep uppercase tracking-wider"></p>
+      <h3 id="modalTitle" class="text-xl sm:text-2xl font-extrabold text-ink mt-1"></h3>
+      <p id="modalSummary" class="text-sm text-ink/75 mt-3 leading-relaxed"></p>
+      <div class="mt-5 pt-5 border-t border-ink/10">
+        <p class="text-xs font-mono uppercase tracking-wider text-ink/60 font-semibold mb-3">Technical Implementation Highlights</p>
+        <ul id="modalBullets" class="space-y-2.5 text-sm text-ink/85"></ul>
       </div>
-      <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
-        <span id="modalMetric" class="text-xs font-mono text-emerald-400 font-semibold"></span>
-        <a href="#contact" onclick="closeModal()" class="text-xs font-semibold px-4 py-2 rounded-lg bg-emerald-500 text-obsidian hover:bg-emerald-400 transition">
+      <div class="mt-6 pt-4 border-t border-ink/10 flex flex-wrap items-center justify-between gap-3">
+        <span id="modalMetric" class="text-xs font-mono text-emeraldDeep font-bold"></span>
+        <a href="#contact" onclick="closeModal()" class="text-xs font-semibold px-4 py-2 rounded-full bg-ink text-cream hover:bg-emeraldDeep transition">
           Discuss Similar Build
         </a>
       </div>
@@ -687,6 +797,14 @@
   </div>
 
   <script>
+    // Top Scroll Progress Bar
+    window.addEventListener('scroll', () => {
+      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+      document.getElementById('scrollProgress').style.width = progress + '%';
+    }, { passive: true });
+
     // Mobile Menu Toggle
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
@@ -694,17 +812,45 @@
       mobileMenu.classList.toggle('hidden');
     });
 
-    // Copy Email Button
+    // One-Click Copy Email
     const copyBtn = document.getElementById('copyEmailHero');
     const copyText = document.getElementById('copyEmailHeroText');
     copyBtn.addEventListener('click', () => {
       navigator.clipboard.writeText('gurpreet231201@gmail.com');
       copyText.textContent = 'Copied to clipboard!';
-      copyBtn.classList.add('border-emerald-500/50', 'text-emerald-400');
+      copyBtn.classList.add('border-emeraldDeep', 'text-emeraldDeep');
       setTimeout(() => {
         copyText.textContent = 'gurpreet231201@gmail.com';
-        copyBtn.classList.remove('border-emerald-500/50', 'text-emerald-400');
+        copyBtn.classList.remove('border-emeraldDeep', 'text-emeraldDeep');
       }, 2200);
+    });
+
+    // Scroll Reveal Choreography
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Animated Number Counters
+    document.querySelectorAll('.count-up').forEach(counter => {
+      const target = parseInt(counter.getAttribute('data-target'), 10);
+      let current = 0;
+      const step = Math.max(1, Math.ceil(target / 30));
+      const timer = setInterval(() => {
+        current += step;
+        if (current >= target) {
+          counter.textContent = target;
+          clearInterval(timer);
+        } else {
+          counter.textContent = current;
+        }
+      }, 30);
     });
 
     // Category Filter Tabs
@@ -713,11 +859,11 @@
     filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         filterBtns.forEach(b => {
-          b.classList.remove('bg-emerald-500', 'text-obsidian', 'font-semibold');
-          b.classList.add('bg-white/[0.04]', 'border', 'border-white/10', 'text-slate-300');
+          b.classList.remove('bg-ink', 'text-cream', 'font-semibold');
+          b.classList.add('bg-white', 'border', 'border-ink/20', 'text-ink');
         });
-        btn.classList.add('bg-emerald-500', 'text-obsidian', 'font-semibold');
-        btn.classList.remove('bg-white/[0.04]', 'border', 'border-white/10', 'text-slate-300');
+        btn.classList.add('bg-ink', 'text-cream', 'font-semibold');
+        btn.classList.remove('bg-white', 'border', 'border-ink/20', 'text-ink');
 
         const filter = btn.getAttribute('data-filter');
         projectCards.forEach(card => {
@@ -730,7 +876,7 @@
       });
     });
 
-    // Architecture Modal Data & Handlers
+    // Architecture Modal Data
     const modalData = {
       shopify: {
         badge: 'Shopify • Liquid • CRO Architecture',
@@ -776,7 +922,7 @@
       document.getElementById('modalSummary').textContent = data.summary;
       document.getElementById('modalMetric').textContent = data.metric;
       const list = document.getElementById('modalBullets');
-      list.innerHTML = data.bullets.map(item => `<li class="flex items-start gap-2.5"><span class="text-emerald-400 mt-1">▹</span><span>${item}</span></li>`).join('');
+      list.innerHTML = data.bullets.map(item => `<li class="flex items-start gap-2.5"><span class="text-emeraldDeep font-bold mt-0.5">→</span><span>${item}</span></li>`).join('');
       modal.classList.remove('hidden');
     }
 
